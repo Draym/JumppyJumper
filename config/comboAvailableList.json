@@ -1,0 +1,110 @@
+{
+  "Goku": [
+    {
+      "name": "Hand Attack",
+      "combo": "A - A - A - A - SPE - A - D"
+    },
+    {
+      "name": "Move Attack",
+      "combo": "MOVE - A"
+    },
+    {
+      "name": "Hand Propels",
+      "combo": "B"
+    },
+    {
+      "name": "Move Rush Attack",
+      "combo": "MOVE - SPE - A"
+    },
+    {
+      "name": "Rush Attack",
+      "combo": "SPE - A"
+    },
+    {
+      "name": "Jump Kick",
+      "combo": "C - C - C - B"
+    },
+    {
+      "name": "Spiral Kick",
+      "combo": "SPE - C"
+    },
+    {
+      "name": "Kick Propels",
+      "combo": "SPE - B"
+    },
+    {
+      "name": "Transposition",
+      "combo": "SPE - DOWN"
+    },
+    {
+      "name": "Ki Charge",
+      "combo": "SPE - SPE - SPE"
+    },
+    {
+      "name": "Ki Blast",
+      "combo": "D - D - D - D"
+    },
+    {
+      "name": "Kamehameha",
+      "combo": "SPE - D"
+    },
+    {
+      "name": "Genkidama",
+      "combo": "SPE - SPE - C - A - B - D"
+    }
+  ],
+  "Vegeta": [
+    {
+      "name": "Hand Attack",
+      "combo": "A - A - A - A - B - A"
+    },
+    {
+      "name": "Move Attack",
+      "combo": "MOVE - A"
+    },
+    {
+      "name": "Hand Propels",
+      "combo": "B"
+    },
+    {
+      "name": "Move Rush Attack",
+      "combo": "MOVE - SPE - A"
+    },
+    {
+      "name": "Rush Attack",
+      "combo": "SPE - A"
+    },
+    {
+      "name": "Kick Propels",
+      "combo": "SPE - B - A - A"
+    },
+    {
+      "name": "Kick Attack",
+      "combo": "C - C - C - SPE - C"
+    },
+    {
+      "name": "Transposition",
+      "combo": "SPE - DOWN"
+    },
+    {
+      "name": "Ki Charge",
+      "combo": "SPE - SPE - SPE"
+    },
+    {
+      "name": "Ki Blast",
+      "combo": "D - D - D - D"
+    },
+    {
+      "name": "Ki Burst",
+      "combo": "SPE - D"
+    },
+    {
+      "name": "Ki Explode",
+      "combo": "SPE - SPE - B - D"
+    },
+    {
+      "name": "FinalFlash",
+      "combo": "SPE - SPE - B - A - C - D"
+    }
+  ]
+}
