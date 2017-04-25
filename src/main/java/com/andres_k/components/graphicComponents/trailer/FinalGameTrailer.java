@@ -4,6 +4,8 @@ import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.sounds.ESound;
+import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.Graphics;
@@ -50,6 +52,7 @@ public class FinalGameTrailer extends TrailerComponent {
         this.started = true;
         this.running = true;
         this.stopMove = false;
+        MusicController.get().stop(ESound.BACKGROUND_GAME);
     }
 
     public void draw(Graphics g) throws SlickException {

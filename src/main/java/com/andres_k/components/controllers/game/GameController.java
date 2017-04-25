@@ -73,7 +73,7 @@ public class GameController extends WindowController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SoundController.get().play(ESound.EFFECT_FIGHT);
+                //SoundController.get().play(ESound.EFFECT_FIGHT);
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(location, ELocation.GAME_GUI_AnimStart, new Pair<>(ETaskType.START_TIMER, 2000)));
                 backgroundManager.run();
             }

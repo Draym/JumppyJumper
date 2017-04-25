@@ -9,39 +9,18 @@ import com.andres_k.utils.configs.ConfigPath;
 public enum ESound {
     NOTHING(""),
     //musics
-    BACKGROUND_LOAD(ConfigPath.sound_musics + "/DBZ_theme.ogg"),
-    BACKGROUND_HOME(ConfigPath.sound_musics + "/DBZ_namek.ogg"),
-    BACKGROUND_CONNECTION(ConfigPath.sound_musics + "/DBZ_embraceBlueSky.ogg"),
-    BACKGROUND_CREDITS(ConfigPath.sound_musics + "/DBZ_capsuleObtain.ogg"),
-    BACKGROUND_SELECT(ConfigPath.sound_musics + "/DBZ_overTheGalaxy.ogg"),
-    BACKGROUND_GAME(ConfigPath.sound_musics + "/DBZ_wildSoul.ogg"),
+    BACKGROUND_LOAD(ConfigPath.sound_musics + "/loadTheme.ogg"),
+    BACKGROUND_HOME(ConfigPath.sound_musics + "/homeTheme.ogg"),
+    BACKGROUND_GAME(ConfigPath.sound_musics + "/gameTheme.ogg"),
 
     //soundsGame
-    EFFECT_FLASH(ConfigPath.sound_effects + "/DBZ_effect_flash.ogg"),
-    EFFECT_KO(ConfigPath.sound_effects + "/DBZ_KO.ogg"),
-    EFFECT_FIGHT(ConfigPath.sound_effects + "/DBZ_FIGHT.ogg"),
 
     //soundsMenu
     BUTTON_CLICK(ConfigPath.sound_gui + "/buttonClick.wav"),
     BUTTON_FOCUS(ConfigPath.sound_gui + "/buttonFocus.wav"),
     VALIDATE(ConfigPath.sound_gui + "/validate.wav"),
-    UNVALIDATE(ConfigPath.sound_gui + "/unValidate.wav"),
+    UNVALIDATE(ConfigPath.sound_gui + "/unValidate.wav");
 
-    //soundGoku
-    GOKU_HAND_ATTACK(ConfigPath.sound_voices + "/slime" + "/gokuHandAttack.wav"),
-    GOKU_HAND_FLY_PROPELS(ConfigPath.sound_voices + "/slime" + "/gokuHandFlyPropels.wav"),
-    GOKU_RUSH_ATTACK(ConfigPath.sound_voices + "/slime" + "/gokuRushAttack.wav"),
-    GOKU_JUMP_KICK(ConfigPath.sound_voices + "/slime" + "/gokuJumpKick.wav"),
-    GOKU_KICK_PROPELS(ConfigPath.sound_voices + "/slime" + "/gokuKickPropels.wav"),
-    GOKU_TOUCHED_SIMPLE(ConfigPath.sound_voices + "/slime" + "/gokuTouchedSimple.wav"),
-    GOKU_TOUCHED_MEDIUM(ConfigPath.sound_voices + "/slime" + "/gokuTouchedMedium.wav"),
-    GOKU_TOUCHED_PROPELS(ConfigPath.sound_voices + "/slime" + "/gokuTouchedPropels.wav"),
-    GOKU_BLOCK(ConfigPath.sound_voices + "/slime" + "/gokuBlock.wav"),
-    GOKU_KAMEHAMEHA_AIM(ConfigPath.sound_voices + "/slime" + "/Kamehameha - Aim.wav"),
-    GOKU_KAMEHAMEHA_FIRE(ConfigPath.sound_voices + "/slime" + "/Kamehameha - Fire.wav"),
-
-    //soundVegete
-    VEGETA_FINAL_FLASH(ConfigPath.sound_voices + "/vegeta" + "/finalFlash.wav");
 
     private String path;
     private EGameObject object;

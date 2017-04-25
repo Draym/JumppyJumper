@@ -37,6 +37,7 @@ public class HomeController extends WindowController {
     @Override
     public void init() throws SlickException {
         this.backgroundManager.addComponent(EBackground.HOME_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.HOME_SCREEN), 0, 0));
+        this.backgroundManager.addComponent(EBackground.LOGO, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOGO), 300, 20));
     }
 
     @Override
