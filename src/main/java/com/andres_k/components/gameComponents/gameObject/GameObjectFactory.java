@@ -2,7 +2,10 @@ package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.Bonus;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.Gate;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.Portal;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.Trap;
 import com.andres_k.components.gameComponents.gameObject.objects.map.MapObstacle;
 import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Border;
 import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Platform;
@@ -31,6 +34,12 @@ public class GameObjectFactory {
             object = new MapObstacle(animatorController, id, x, y);
         } else if (type == EGameObject.PORTAL) {
             object = new Portal(animatorController, id, x, y);
+        } else if (type == EGameObject.GATE) {
+            object = new Gate(animatorController, id, x, y);
+        } else if (type.isIn(EGameObject.BONUS)) {
+            object = new Bonus(animatorController, type, id, x, y);
+        } else if (type.isIn(EGameObject.TRAP)) {
+            object = new Trap(animatorController, type, id, x, y, 1, 1);
         }
         return object;
     }

@@ -51,6 +51,12 @@ public class AnimatorGameData extends DataManager {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GROUND), EGameObject.GROUND);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.WALL), EGameObject.WALL);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.PORTAL), EGameObject.PORTAL);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GATE), EGameObject.GATE);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.HEART), EGameObject.HEART);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.COIN), EGameObject.COIN);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.STEEL_WHEEL), EGameObject.STEEL_WHEEL);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.STEEL_PIKE), EGameObject.STEEL_PIKE);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.FIRE_GUN), EGameObject.FIRE_GUN);
     }
 
     private void addPlayerAnimator(AnimatorController animatorController, EGameObject type) {

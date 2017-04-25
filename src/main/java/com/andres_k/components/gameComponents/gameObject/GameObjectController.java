@@ -38,6 +38,7 @@ public final class GameObjectController {
     private List<GameObject> entities;
     private List<GameObject> players;
     private int winnerSlimes;
+    public int bonusPoint;
 
     private GameObjectController() {
         this.entities = new ArrayList<>();
@@ -59,8 +60,10 @@ public final class GameObjectController {
 
     public void initWorld() throws SlickException {
         this.winnerSlimes = 0;
+        this.bonusPoint = 0;
         this.entities.add(GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:1", 1245, 415));
-       // this.entities.add(GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:2", 2490, 0));
+        this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:1", 800, 600));
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 200, 640));
     }
 
     // FUNCTIONS
@@ -187,7 +190,7 @@ public final class GameObjectController {
             count = 1;
             startX = 150;
             for (EGameObject type : playerNames) {
-                this.createPlayer(type, "player_slime:" + count, 0, startX, 0, 600, (count == 1));
+                this.createPlayer(type, "player_slime:" + count, startX, 200, 600, 200, true);
                 startX += slimeWidth - 10;
                 ++count;
             }
@@ -195,14 +198,20 @@ public final class GameObjectController {
         this.updateOwnerCameraPlayer();
     }
 
-    public void createPlayer(EGameObject type, String id, int boundX, int startX, int boundY, int startY, boolean ally) throws SlickException {
+    public void createPlayer(EGameObject type, String id, float startX, int boundX, float startY, int boundY, boolean ally) throws SlickException {
         GameObject player = null;
+        float randomX = startX;
+        float randomY = startY;
+        boolean checked = false;
 
         while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
-            //int randomX = RandomTools.getInt(boundX) + startX;
-            //int randomY = RandomTools.getInt(boundY) + startY;
-            player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, startX, startY);
+            if (checked) {
+                randomX = (float) RandomTools.getInt(boundX) + startX;
+                randomY = (float) RandomTools.getInt(boundY) + startY;
+            }
+            player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
             player.doTask(new Tuple<>(ETaskType.SETTER, "teamOne", ally));
+            checked = true;
         }
         Console.write("Create Player: " + player);
         /*
@@ -265,6 +274,14 @@ public final class GameObjectController {
     }
 
     // GETTERS
+
+    public List<GameObject> getPlayers() {
+        return this.players;
+    }
+
+    public List<GameObject> getEntities() {
+        return this.entities;
+    }
 
     public List<GameObject> getAllExpectHim(String id) {
         List<GameObject> items = new ArrayList<>();

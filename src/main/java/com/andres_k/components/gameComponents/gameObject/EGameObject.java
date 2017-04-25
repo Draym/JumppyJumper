@@ -25,16 +25,23 @@ public enum EGameObject {
     BORDER("BORDER", DEADPAN.getValue()),
     PLAYER("PLAYER", ANIMATED.getValue()),
     ENTITY("ENTITY", ANIMATED.getValue()),
+    BONUS("BONUS", ENTITY.getValue()),
+    TRAP("TRAP", ENTITY.getValue()),
 
     //items
-    MAP("Map", UNBREAKABLE.getValue()),
-    GATE("Gate", UNBREAKABLE.getValue()),
-    GROUND("Ground", PLATFORM.getValue()),
-    WALL("Wall", BORDER.getValue()),
-    PORTAL("Portal", SPECIAL.getValue()),
+    MAP("MAP", UNBREAKABLE.getValue()),
+    GROUND("GROUND", PLATFORM.getValue()),
+    WALL("WALL", BORDER.getValue()),
+    PORTAL("PORTAL", SPECIAL.getValue()),
+    COIN("COIN", BONUS.getValue()),
+    HEART("HEART", BONUS.getValue()),
+    GATE("GATE", SPECIAL.getValue()),
+    FIRE_GUN("FIRE_GUN", TRAP.getValue()),
+    STEEL_WHEEL("STEEL_WHEEL", TRAP.getValue()),
+    STEEL_PIKE("STEEL_PIKE", TRAP.getValue()),
 
     //players
-    SLIME("Slime", PLAYER.getValue());
+    SLIME("SLIME", PLAYER.getValue());
 
 
     private final String value;

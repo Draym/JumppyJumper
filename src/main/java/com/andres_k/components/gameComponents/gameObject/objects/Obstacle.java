@@ -42,7 +42,7 @@ public class Obstacle extends PhysicalObject {
 
     @Override
     public void manageDoHit(GameObject enemy) {
-        if (enemy.getAnimatorController().currentAnimationType() == EAnimation.JUMP) {
+        if (enemy.getAnimatorController().currentAnimationType() == EAnimation.JUMP && !enemy.isOnEarth()) {
             enemy.getAnimatorController().toNextAnimation();
         }
     }

@@ -49,7 +49,6 @@ public enum ESprites {
     BUTTON_COMBO(BUTTON.getIndex()),
     BUTTON_LOCK(BUTTON.getIndex()),
 
-
     //gamePlayer
     SLIME(PLAYER.getIndex()),
 
@@ -57,6 +56,12 @@ public enum ESprites {
     WALL(ITEM.getIndex()),
     GROUND(ITEM.getIndex()),
     PORTAL(ITEM.getIndex()),
+    HEART(ITEM.getIndex()),
+    COIN(ITEM.getIndex()),
+    GATE(ITEM.getIndex()),
+    FIRE_GUN(ITEM.getIndex()),
+    STEEL_WHEEL(ITEM.getIndex()),
+    STEEL_PIKE(ITEM.getIndex()),
 
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),
