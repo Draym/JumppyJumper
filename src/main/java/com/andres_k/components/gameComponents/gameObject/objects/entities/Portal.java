@@ -16,6 +16,8 @@ import org.newdawn.slick.SlickException;
  */
 public class Portal extends Obstacle {
 
+    private boolean selected;
+
     public Portal(AnimatorController animatorController, String id, float x, float y) {
         super(animatorController, EGameObject.PORTAL, id, x, y, 0, 0, 0, 0);
     }
@@ -41,5 +43,13 @@ public class Portal extends Obstacle {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isSelected() {
+        return this.selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

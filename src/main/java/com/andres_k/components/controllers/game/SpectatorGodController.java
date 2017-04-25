@@ -5,14 +5,18 @@ import com.andres_k.components.eventComponent.events.MouseController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.gameComponents.gameObject.GameObjectFactory;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.Portal;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.MathTools;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+
+import java.util.List;
 
 /**
  * Created by kevin on 24/04/2017.
@@ -78,6 +82,17 @@ public class SpectatorGodController {
             } catch (SlickException e) {
                 e.printStackTrace();
             }
+        } else {
+            List<GameObject> entities = GameObjectController.get().getEntities();
+
+            entities.stream().filter(entity -> entity.getType() == EGameObject.PORTAL).filter(entity -> entity.getBody().getFlippedBody(entity.getAnimatorController().getEyesDirection().isHorizontalFlip(), CameraController.get().getTransformPosX(entity.getPosX()),
+                    CameraController.get().getTransformPosY(entity.getPosY()), entity.getAnimatorController().getRotateAngle()).contains(x, y)).forEachOrdered(entity -> {
+                if (((Portal) entity).isSelected()) {
+                    entity.getAnimatorController().setDeleted(true);
+                } else {
+                    ((Portal) entity).setSelected(true);
+                }
+            });
         }
     }
 }
