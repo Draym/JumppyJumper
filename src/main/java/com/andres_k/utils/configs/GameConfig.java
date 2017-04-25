@@ -25,7 +25,7 @@ public class GameConfig {
     public static float speedTravel = 1f;
     public static float speedJump = 4f;
 
-    public static float globalMapWidth = 2490;
+    public static float globalMapWidth = 4980;
     public static float globalMapHeight = 830;
 
     public static final EGuiElement playerChoiceGui[] = new EGuiElement[] {EGuiElement.AVATAR_SLIME};

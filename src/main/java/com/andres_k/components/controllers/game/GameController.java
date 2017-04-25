@@ -1,5 +1,6 @@
 package com.andres_k.components.controllers.game;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
@@ -64,6 +65,7 @@ public class GameController extends WindowController {
         this.gameFinish = false;
         this.gameStarted = false;
         this.pause = false;
+        CameraController.get().init();
         this.spectatorGodController.reset();
         this.resetFinalTrailer();
         GameObjectController.get().enter();

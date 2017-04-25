@@ -20,9 +20,7 @@ public class CameraController {
     private String idOwner;
 
     private CameraController() {
-        this.camX = 0;
-        this.camY = 0;
-        this.idOwner = "";
+        this.init();
     }
 
     private static class SingletonHolder {
@@ -31,6 +29,12 @@ public class CameraController {
 
     public static CameraController get() {
         return CameraController.SingletonHolder.instance;
+    }
+
+    public void init() {
+        this.camX = 0;
+        this.camY = 0;
+        this.idOwner = "";
     }
 
     public void draw(Graphics g, Shape shape, boolean useCameraMove) {
@@ -78,6 +82,13 @@ public class CameraController {
                 this.camY = 0;
             }
         }
+    }
+
+    public boolean isVisible(GameObject enemy) {
+        return (enemy.getPosX() >= this.camX
+                && enemy.getPosX() <= this.camX + WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1()
+                && enemy.getPosY() >= this.camY
+                && enemy.getPosY() <= this.camY + WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2());
     }
 
     // GETTERS
