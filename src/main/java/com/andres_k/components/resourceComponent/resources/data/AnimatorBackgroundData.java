@@ -34,6 +34,7 @@ public class AnimatorBackgroundData extends DataManager {
     protected void initialiseMethods() throws NoSuchMethodException {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initHomeScreen")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initFinalScreen")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initMaps")));
     }
 
@@ -49,6 +50,11 @@ public class AnimatorBackgroundData extends DataManager {
 
     public void initHomeScreen() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.HOME_SCREEN), EBackground.HOME_SCREEN);
+    }
+
+    public void initFinalScreen() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.FINAL_SCREEN), EBackground.FINAL_SCREEN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.FINAL_SCREEN_CLOUD), EBackground.FINAL_SCREEN_CLOUD);
     }
 
     public void initMaps() throws NoSuchMethodException, SlickException, JSONException {

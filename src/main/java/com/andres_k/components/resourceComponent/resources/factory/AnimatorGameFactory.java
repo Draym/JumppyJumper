@@ -59,7 +59,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
 
 
         //FALL
-        animatorController.addAnimation(EAnimation.WIN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/slimeWin.png", 128, 128), EAnimation.WIN.isLoop(), 0, 3, 0, 1, new int[]{80, 70, 100}));
+        animatorController.addAnimation(EAnimation.WIN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/slimeWin.png", 128, 128), EAnimation.WIN.isLoop(), 0, 3, 0, 1, new int[]{180, 180, 300}));
         return animatorController;
     }
 

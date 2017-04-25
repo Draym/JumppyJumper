@@ -39,7 +39,7 @@ public enum EAnimation {
 
 
     // FINAL
-    WIN(false),
+    WIN(true),
     LOSE(false);
 
     private boolean loop;

@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo.ComboAvailableList;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
@@ -24,9 +25,11 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
@@ -53,8 +56,10 @@ public class GameGUI extends UserInterface {
         options.addItem(new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL4), true));
 
         ListElement buttonList = new ListElement(new ColorRect(new Rectangle(32, 74, 259, 279)), 0, 9, true);
-        buttonList.addItem(ElementFactory.createButtonTitleText(" Resume ", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 25, EGuiElement.BUTTON_RESUME, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_GUI_Options, ETaskType.ON_KILL), ElementFactory.createImageFocusTasks()));
-       buttonList.addItem(ElementFactory.createButtonTitleText("Settings", ColorTools.get(ColorTools.Colors.GUI_GREY), EFont.MODERN, 25, EGuiElement.BUTTON_SETTING, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI_Options, ELocation.GAME_GUI_Settings, ETaskType.ON_CREATE), ElementFactory.createImageFocusTasks()));
+        ElementWithTitle item = ElementFactory.createButtonTitleText(" Resume ", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 25, EGuiElement.BUTTON_RESUME, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_GUI_Options, ETaskType.ON_KILL), ElementFactory.createImageFocusTasks());
+        item.addTask(new Pair<>(EStatus.ON_CLICK, new TaskComponent(this.getLocation(), ELocation.GAME_CONTROLLER, ETaskType.START_ACTIVITY)));
+        //buttonList.addItem(item);
+        buttonList.addItem(ElementFactory.createButtonTitleText("Settings", ColorTools.get(ColorTools.Colors.GUI_GREY), EFont.MODERN, 25, EGuiElement.BUTTON_SETTING, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI_Options, ELocation.GAME_GUI_Settings, ETaskType.ON_CREATE), ElementFactory.createImageFocusTasks()));
         buttonList.addItem(ElementFactory.createButtonTitleText(" Home   ", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_EXIT, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, EnumWindow.HOME), ElementFactory.createImageFocusTasks()));
         options.addItem(buttonList);
 

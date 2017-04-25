@@ -156,14 +156,11 @@ public class BasicActions {
             }
         }
         if (object.isOnEarth()) {
-            Console.write("ON EARTH");
             object.getAnimatorController().toNextAnimation();
-            Console.write("NEW: " + object.getAnimatorController().currentAnimationType());
         }
     }
 
     public static void run(GameObject object) {
-        Console.write("RUN: " + object.isOnEarth());
         object.getMovement().setPushY(0);
         //object.getMovement().setUseGravity(true);
         if (object.isOnEarth()) {

@@ -33,6 +33,12 @@ public class AnimatorBackgroundFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_background + "/logo.png"));
         } else if (index == ESprites.HOME_SCREEN) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_background + "/backgroundHome.png"));
+        } else if (index == ESprites.FINAL_SCREEN) {
+            Animation animation = AnimationFactory.loadAnimation(ConfigPath.image_background + "/final/backgroundFinal ", ".png", 0, 2, true, 300, 0);
+            animation.setPingPong(true);
+            animatorController.addAnimation(EAnimation.IDLE, 0, animation);
+        } else if (index == ESprites.FINAL_SCREEN_CLOUD) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_background + "/final/backgroundFinalCloud.png"));
         }
         return animatorController;
     }

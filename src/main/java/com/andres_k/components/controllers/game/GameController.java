@@ -9,7 +9,9 @@ import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.background.EBackground;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.background.wallpaper.WallpaperSliding;
+import com.andres_k.components.graphicComponents.trailer.FinalGameTrailer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.components.networkComponents.networkGame.NetworkProfile;
@@ -25,15 +27,14 @@ import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
-import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.DateTools;
-import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import java.util.*;
@@ -45,20 +46,27 @@ public class GameController extends WindowController {
     private InputGame inputGame;
     private List<EGameObject> playerTypes;
     private SpectatorGodController spectatorGodController;
-
-    private boolean running;
+    private FinalGameTrailer finalTrailer;
+    private boolean pause;
+    private boolean gameStarted;
+    private boolean gameFinish;
 
     public GameController(int idWindow) throws JSONException {
         super(ELocation.GAME_CONTROLLER, idWindow);
         this.inputGame = new InputGame();
         this.spectatorGodController = new SpectatorGodController();
         this.playerTypes = new ArrayList<>();
+        this.finalTrailer = new FinalGameTrailer();
     }
 
     @Override
     public void enter() throws SlickException {
+        this.gameFinish = false;
+        this.gameStarted = false;
+        this.pause = false;
+        this.spectatorGodController.reset();
+        this.resetFinalTrailer();
         GameObjectController.get().enter();
-
         this.createPlayerForGame();
         new Timer().schedule(new TimerTask() {
             @Override
@@ -71,14 +79,16 @@ public class GameController extends WindowController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                running = true;
+                gameStarted = true;
             }
         }, 3500);
     }
 
     @Override
     public void leave() {
-        this.running = false;
+        this.pause = false;
+        this.gameStarted = false;
+        this.gameFinish = true;
         GameObjectController.get().leave();
         if (NetworkController.get().isConnected()) {
             NetworkController.get().disconnect();
@@ -89,40 +99,53 @@ public class GameController extends WindowController {
     public void init() throws SlickException {
         GameObjectController.get().init();
         this.spectatorGodController.init();
-        this.backgroundManager.addComponent(EBackground.MAP_1, new WallpaperSliding(ResourceManager.get().getBackgroundAnimator(EBackground.BACKGROUND_BLOCK_1), 10, true, true));
+        this.backgroundManager.addComponent(EBackground.MAP_1, new WallpaperSliding(ResourceManager.get().getBackgroundAnimator(EBackground.BACKGROUND_BLOCK_1), 30, true, true));
+         this.backgroundManager.addComponent(EBackground.FINAL_SCREEN_CLOUD, new WallpaperSliding(ResourceManager.get().getBackgroundAnimator(EBackground.FINAL_SCREEN_CLOUD), 10, true, true, 1));
+        this.backgroundManager.addComponent(EBackground.FINAL_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.FINAL_SCREEN)));
+        this.backgroundManager.getComponent(EBackground.FINAL_SCREEN_CLOUD).activate(false);
+        this.backgroundManager.getComponent(EBackground.FINAL_SCREEN).activate(false);
     }
 
     @Override
     public void renderWindow(Graphics g) throws SlickException {
         this.backgroundManager.draw(g);
-        this.spectatorGodController.draw(g);
-        GameObjectController.get().draw(g);
+
+        if (!this.finalTrailer.isStarted()) {
+            this.spectatorGodController.draw(g);
+            GameObjectController.get().draw(g);
+        } else {
+            this.finalTrailer.draw(g);
+        }
     }
 
     @Override
     public void update(GameContainer gameContainer) throws SlickException {
-        if (this.running || GameObjectController.get().isTheEndOfTheGame()) {
+        if (!this.pause) {
             this.backgroundManager.update();
-            this.spectatorGodController.update();
-            GameObjectController.get().update(this.running);
-        }
-        if (this.running) {
-            if (GameObjectController.get().isTheEndOfTheGame()) {
-                this.endOfTheGame();
+            if (GameObjectController.get().isTheEndOfTheGame() && !this.finalTrailer.isStarted()) {
+                this.launchFinalTrailer();
             }
         }
+        if (!this.gameFinish && !this.pause && this.gameStarted) {
+            this.spectatorGodController.update();
+            GameObjectController.get().update(!this.pause);
+        }
+        if (this.finalTrailer.isFinished()) {
+            this.endOfTheGame();
+        }
+        // if final trailer started
+        this.finalTrailer.update();
     }
 
     @Override
     public void beforeEnter() {
         this.playerTypes.clear();
         this.playerTypes.addAll(GameConfig.typePlayer);
-        this.spectatorGodController.reset();
     }
 
     @Override
     public void keyPressed(int key, char c) {
-        if (this.running) {
+        if (!this.pause) {
             EInput result = this.inputGame.checkInput(key);
             if (!this.spectatorGodController.keyPressed(result)) {
                 GameObjectController.get().event(EInput.KEY_PRESSED, result);
@@ -132,7 +155,10 @@ public class GameController extends WindowController {
 
     @Override
     public void keyReleased(int key, char c) {
-        if (this.running) {
+        if (key == Input.KEY_ESCAPE && this.gameStarted) {
+            this.pause = !this.pause;
+        }
+        if (!this.pause) {
             EInput result = this.inputGame.checkInput(key);
             if (!this.spectatorGodController.keyReleased(result)) {
                 GameObjectController.get().event(EInput.KEY_RELEASED, result);
@@ -147,14 +173,14 @@ public class GameController extends WindowController {
 
     @Override
     public void mousePressed(int button, int x, int y) {
-        if (this.running) {
+        if (!this.pause) {
             this.spectatorGodController.mousePressed(button, x, y);
         }
     }
 
     @Override
     public void mouseReleased(int button, int x, int y) {
-        if (this.running) {
+        if (!this.pause) {
             this.spectatorGodController.mouseReleased(button, x, y);
         }
     }
@@ -162,6 +188,7 @@ public class GameController extends WindowController {
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof TaskComponent) {
+            Console.write("GAME CONTROLLER  -> " + arg);
             TaskComponent received = (TaskComponent) arg;
             if (received.getTarget().equals(this.location)) {
                 if (received.getTask() instanceof MessageModel) {
@@ -178,16 +205,40 @@ public class GameController extends WindowController {
                         GameObjectController.get().taskForPlayer((String) ((Pair) received.getTask()).getV1(), ((Pair) received.getTask()).getV2());
                         return;
                     }
+                } else if (received.getTask() instanceof  ETaskType) {
+                    if (received.getTask() == ETaskType.START_ACTIVITY) {
+                        this.pause = false;
+                    }
                 }
             }
         }
         super.update(o, arg);
     }
 
+    private void launchFinalTrailer() throws SlickException {
+        if (GameObjectController.get().getWinnerSlimes() > 0) {
+            this.finalTrailer.initTrailer(GameObjectController.get().getWinnerSlimes());
+            this.finalTrailer.launchTrailer();
+            this.backgroundManager.getComponent(EBackground.MAP_1).activate(false);
+            this.backgroundManager.getComponent(EBackground.FINAL_SCREEN).activate(true);
+            this.backgroundManager.getComponent(EBackground.FINAL_SCREEN_CLOUD).activate(true);
+        } else {
+            this.endOfTheGame();
+        }
+    }
+
+    private void resetFinalTrailer() {
+        this.finalTrailer.reset();
+        this.backgroundManager.getComponent(EBackground.MAP_1).activate(true);
+        this.backgroundManager.getComponent(EBackground.FINAL_SCREEN).activate(false);
+        this.backgroundManager.getComponent(EBackground.FINAL_SCREEN_CLOUD).activate(false);
+    }
+
     private void endOfTheGame() {
-        if (this.running) {
+        if (!this.gameFinish) {
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
 
+            this.gameFinish = true;
             int winners = GameObjectController.get().getWinnerSlimes();
             if (winners > 0) {
                 NetworkController.get().sendMessage("player1", new MessageGameEnd("", ""));
@@ -205,13 +256,12 @@ public class GameController extends WindowController {
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("you get " + GameObjectController.get().bonusPoint + " super coin!", ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 15, 100, 45))));
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Total score : " + GameObjectController.get().bonusPoint, ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 20, 110, 70))));
             }
-            this.running = false;
         }
     }
 
     private void endOfTheGameForcedByNetwork(String id, String pseudo, String type) {
-        if (this.running) {
-            this.running = false;
+        if (!this.gameFinish) {
+            this.gameFinish = true;
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
             if (NetworkProfile.get().itsMyNetworkProfile(id) || NetworkProfile.get().itsMyGameProfile(id)) {
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("YOU WIN !", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 30, 30, 40))));
@@ -267,10 +317,10 @@ public class GameController extends WindowController {
 
     public void createPlayerForGame() throws SlickException {
         this.playerTypes.clear();
-        this.playerTypes.add(EGameObject.SLIME);/*
         this.playerTypes.add(EGameObject.SLIME);
         this.playerTypes.add(EGameObject.SLIME);
-        this.playerTypes.add(EGameObject.SLIME);*/
+        this.playerTypes.add(EGameObject.SLIME);
+        this.playerTypes.add(EGameObject.SLIME);
         GameObjectController.get().createPlayers(this.playerTypes);
     }
 }

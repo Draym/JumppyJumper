@@ -66,6 +66,8 @@ public enum ESprites {
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),
     HOME_SCREEN(SCREEN_BACKGROUND.getIndex()),
+    FINAL_SCREEN(SCREEN_BACKGROUND.getIndex()),
+    FINAL_SCREEN_CLOUD(SCREEN_BACKGROUND.getIndex()),
     LOGO(SCREEN_BACKGROUND.getIndex()),
 
     //map

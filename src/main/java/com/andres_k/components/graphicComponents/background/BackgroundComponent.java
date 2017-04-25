@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.background;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -16,6 +17,7 @@ public abstract class BackgroundComponent {
 
     protected boolean ready;
     protected boolean running;
+    protected boolean activated;
 
     public BackgroundComponent(AnimatorController animator) throws SlickException {
         this(animator, 0, 0);
@@ -24,6 +26,7 @@ public abstract class BackgroundComponent {
     public BackgroundComponent(AnimatorController animator, float x, float y) throws SlickException {
         this.ready = false;
         this.running = false;
+        this.activated = true;
         this.x = x;
         this.y = y;
         this.animator = animator;
@@ -39,17 +42,22 @@ public abstract class BackgroundComponent {
         this.running = false;
     }
 
+    public void activate(boolean value) {
+        this.activated = value;
+    }
+
     public void draw(Graphics g) {
-        if (this.animator != null)
+        if (this.animator != null && this.activated) {
             try {
                 this.animator.draw(g, this.x, this.y);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
+        }
     }
 
     public void update() {
-        if (this.running) {
+        if (this.running && this.activated) {
             this.animator.update();
         }
     }
@@ -59,6 +67,10 @@ public abstract class BackgroundComponent {
     }
 
     // GETTERS
+    public boolean isActivated() {
+        return this.activated;
+    }
+
     public boolean isReady() {
         return this.ready;
     }
