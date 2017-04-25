@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.effects;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.effects.effect.directive.ClearEffects;
@@ -99,9 +100,9 @@ public class EffectManager {
             image.setCenterOfRotation((image.getWidth() * this.conf.scale) / 2, (image.getHeight() * this.conf.scale) / 2);
             image.rotate(this.conf.rotation);
             if (conf.color == null) {
-                image.draw(this.conf.x, this.conf.y, this.conf.scale);
+                CameraController.get().draw(image, this.conf.x, this.conf.y, this.conf.scale, true);
             } else {
-                image.draw(this.conf.x, this.conf.y, this.conf.scale, this.conf.color);
+                CameraController.get().draw(image, this.conf.x, this.conf.y, this.conf.scale, this.conf.color, true);
             }
             this.draw(g);
         }

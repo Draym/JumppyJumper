@@ -23,7 +23,10 @@ public class GameConfig {
     public static ArrayList<EGameObject> typePlayer = new ArrayList<>();
 
     public static float speedTravel = 1f;
-    public static float speedJump = 2f;
+    public static float speedJump = 4f;
+
+    public static float globalMapWidth = 2490;
+    public static float globalMapHeight = 830;
 
     public static final EGuiElement playerChoiceGui[] = new EGuiElement[] {EGuiElement.AVATAR_SLIME};
     public static final EGameObject playerChoiceType[] = new EGameObject[] {EGameObject.SLIME};

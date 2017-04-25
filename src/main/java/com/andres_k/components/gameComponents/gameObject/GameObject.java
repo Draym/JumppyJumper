@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
@@ -79,8 +80,11 @@ public abstract class GameObject {
             this.animatorController.draw(g, this.graphicalX(), this.graphicalY());
             if (GlobalVariable.drawCollision && this.animatorController.currentBodyAnimation() != null) {
                 this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.animatorController.getEyesDirection().isHorizontalFlip(),
-                        this.getPosX(), this.getPosY(), this.getAnimatorController().getRotateAngle());
-                g.fillRect(this.getPosX(), this.getPosY(), 5, 5);
+                        this.getPosX(), this.getPosY(), this.getAnimatorController().getRotateAngle(), this.getAnimatorController().isUseCameraMove());
+                if (this.getAnimatorController().isUseCameraMove())
+                    g.fillRect(CameraController.get().getTransformPosX(this.getPosX()), CameraController.get().getTransformPosY(this.getPosY()), 5, 5);
+                else
+                    g.fillRect(this.getPosX(), this.getPosY(), 5, 5);
             }
         }
     }
@@ -122,7 +126,7 @@ public abstract class GameObject {
 
     public void teleportBehindMyAttacker() {
         if (this.attackerOwner != null) {
-            this.movement.setPositions(this.attackerOwner.getPosX() + (this.attackerOwner.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.attackerOwner.getPosY() - 70);
+            this.movement.setPositions(this.attackerOwner.getPosX() + (this.attackerOwner.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? -70 : 70), this.attackerOwner.getPosY() - 70);
             this.animatorController.setEyesDirection(this.attackerOwner.getAnimatorController().getEyesDirection());
             this.useAttackerTimer = true;
         }
@@ -205,7 +209,6 @@ public abstract class GameObject {
     }
 
     public float
-
 
 
     graphicalX() {

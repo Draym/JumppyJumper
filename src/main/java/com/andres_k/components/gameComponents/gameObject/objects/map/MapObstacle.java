@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.gameObject.objects.map;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
 
 /**

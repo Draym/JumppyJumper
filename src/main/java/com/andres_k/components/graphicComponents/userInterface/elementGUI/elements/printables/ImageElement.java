@@ -58,6 +58,7 @@ public class ImageElement extends Element {
         if (this.animatorController != null) {
             this.animatorController.update();
             this.animatorController.updateAnimator(activated, activated);
+            this.animatorController.setUseCameraMove(false);
             if (this.body == null) {
                 this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2()));
             } else if (this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {

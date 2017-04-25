@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EInput;
@@ -27,6 +28,7 @@ import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +37,7 @@ import java.util.stream.Collectors;
 public final class GameObjectController {
     private List<GameObject> entities;
     private List<GameObject> players;
+    private int winnerSlimes;
 
     private GameObjectController() {
         this.entities = new ArrayList<>();
@@ -55,6 +58,7 @@ public final class GameObjectController {
     }
 
     public void initWorld() throws SlickException {
+        this.winnerSlimes = 0;
         this.entities.add(GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:1", 1245, 415));
        // this.entities.add(GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:2", 2490, 0));
     }
@@ -107,7 +111,25 @@ public final class GameObjectController {
                     this.doMovement(this.entities.get(i));
                 }
             }
+            CameraController.get().followOwner(this.getPlayerById(CameraController.get().getIdOwner()));
         }
+    }
+
+    private void updateOwnerCameraPlayer() {
+        float maxX = 0;
+        int saveI = 0;
+
+        for (int i = 0; i < this.players.size(); ++i) {
+            if (maxX <= this.players.get(i).getPosX()) {
+                maxX = this.players.get(i).getPosX();
+                saveI = i;
+            }
+        }
+        CameraController.get().setIdOwner(this.players.get(saveI).getId());
+    }
+
+    public void addWinner(String id) {
+        this.winnerSlimes += 1;
     }
 
     // TASK
@@ -138,6 +160,9 @@ public final class GameObjectController {
 
     public void thisPlayerIsDead(Player player) {
         Console.write("\n A Slime is dead");
+        if (player.getId().equals(CameraController.get().getIdOwner())) {
+            this.updateOwnerCameraPlayer();
+        }
     }
 
     public void changeGameState(boolean running) throws SlickException {
@@ -162,11 +187,12 @@ public final class GameObjectController {
             count = 1;
             startX = 150;
             for (EGameObject type : playerNames) {
-                this.createPlayer(type, "player_slime", 0, startX, 0, 600, (count == 1));
+                this.createPlayer(type, "player_slime:" + count, 0, startX, 0, 600, (count == 1));
                 startX += slimeWidth - 10;
                 ++count;
             }
         }
+        this.updateOwnerCameraPlayer();
     }
 
     public void createPlayer(EGameObject type, String id, int boundX, int startX, int boundY, int startY, boolean ally) throws SlickException {
@@ -270,22 +296,6 @@ public final class GameObjectController {
         return null;
     }
 
-    public GameObject getWinner() {
-        if (this.isTheEndOfTheGame()) {
-            for (GameObject object : this.players) {
-                if (object instanceof Player) {
-                    return object;
-                }
-            }
-            for (GameObject object : this.entities) {
-                if (object instanceof Player) {
-                    return object;
-                }
-            }
-        }
-        return null;
-    }
-
     public boolean isTheEndOfTheGame() {
         return (GameConfig.mode != EMode.SOLO && this.getNumberPlayers() == 0);
     }
@@ -299,5 +309,9 @@ public final class GameObjectController {
             }
         }
         return nbPlayer;
+    }
+
+    public int getWinnerSlimes() {
+        return this.winnerSlimes;
     }
 }

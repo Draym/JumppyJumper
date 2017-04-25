@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.bodies;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.utils.tools.MathTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -34,15 +35,15 @@ public class BodySprite {
         this.id = UUID.randomUUID();
     }
 
-    public void draw(Graphics g, boolean haveToFlip, float posX, float posY, float rotateAngle) {
+    public void draw(Graphics g, boolean haveToFlip, float posX, float posY, float rotateAngle, boolean useCameraMove) {
         g.setColor(Color.red);
         Shape mySprite = this.getFlippedSprite(haveToFlip, posX, posY, rotateAngle);
-        g.draw(mySprite);
+        CameraController.get().draw(g, mySprite, useCameraMove);
         g.setColor(Color.green);
         Shape myBody = this.getFlippedBody(haveToFlip, posX, posY, rotateAngle);
-        g.draw(myBody);
+        CameraController.get().draw(g, myBody, useCameraMove);
         for (BodyRect rect : this.bodies) {
-            rect.draw(g, haveToFlip, this.getFlippedBody(haveToFlip, posX, posY), posX, posY, rotateAngle);
+            rect.draw(g, haveToFlip, this.getFlippedBody(haveToFlip, posX, posY), posX, posY, rotateAngle, useCameraMove);
         }
     }
 

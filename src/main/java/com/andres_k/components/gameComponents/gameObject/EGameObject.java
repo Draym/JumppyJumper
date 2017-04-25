@@ -28,6 +28,7 @@ public enum EGameObject {
 
     //items
     MAP("Map", UNBREAKABLE.getValue()),
+    GATE("Gate", UNBREAKABLE.getValue()),
     GROUND("Ground", PLATFORM.getValue()),
     WALL("Wall", BORDER.getValue()),
     PORTAL("Portal", SPECIAL.getValue()),

@@ -2,8 +2,10 @@ package com.andres_k.components.gameComponents.gameObject.objects;
 
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -36,5 +38,12 @@ public class Obstacle extends PhysicalObject {
     @Override
     public Object doTask(Object task) {
         return null;
+    }
+
+    @Override
+    public void manageDoHit(GameObject enemy) {
+        if (enemy.getAnimatorController().currentAnimationType() == EAnimation.JUMP) {
+            enemy.getAnimatorController().toNextAnimation();
+        }
     }
 }

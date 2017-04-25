@@ -38,6 +38,7 @@ public abstract class PhysicalObject extends GameObject {
         CollisionResult result = new CollisionResult();
 
         this.saveCollisions.clear();
+
         List<GameObject> potential = items.stream().filter(item -> checkBorderCollision(item, newPos)).collect(Collectors.toList());
 
         potential.forEach(item -> result.compileWith(checkBodyCollision(item, pos, newPos)));
@@ -48,7 +49,7 @@ public abstract class PhysicalObject extends GameObject {
         return result;
     }
 
-    public boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
+    private boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
         if (!enemy.getId().contains(this.getId())) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();
@@ -57,8 +58,10 @@ public abstract class PhysicalObject extends GameObject {
                     || this.saveCollisions.get(myBody.getId()) == hisBody.getId()
                     || this.saveCollisions.get(hisBody.getId()) == myBody.getId())
                 return false;
-            if (myBody.getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), pos.getV1(), pos.getV2(), this.getAnimatorController().getRotateAngle())
-                    .intersects(hisBody.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle()))) {
+            if (myBody.getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                    pos.getV1(), pos.getV2(), this.getAnimatorController().getRotateAngle())
+                    .intersects(hisBody.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                            enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle()))) {
                 this.saveCollisions.put(myBody.getId(), hisBody.getId());
                 return true;
             }
@@ -141,6 +144,8 @@ public abstract class PhysicalObject extends GameObject {
                     pos.getV1(), pos.getV2(), myRotateAngle);
 
             EGameObject enemyType = enemy.getType();
+
+            enemy.manageDoHit(this);
             if (enemyType == EGameObject.MAP) {
                 if (hisShape.getWidth() >= hisShape.getHeight()) {
                     enemyType = EGameObject.PLATFORM;

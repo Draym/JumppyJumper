@@ -1,5 +1,6 @@
 package com.andres_k.components.controllers.game;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.eventComponent.events.MouseController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
@@ -63,8 +64,8 @@ public class SpectatorGodController {
 
     public void mousePressed(int button, int x, int y) {
         this.clicked = (button == 0);
-        this.startClick.setV1(x);
-        this.startClick.setV2(y);
+        this.startClick.setV1(x + (int)CameraController.get().getCamX());
+        this.startClick.setV2(y + (int)CameraController.get().getCamY());
     }
 
     public void mouseReleased(int button, int x, int y) {
@@ -72,7 +73,7 @@ public class SpectatorGodController {
             this.clicked = false;
             try {
                 AnimatorController animator = ResourceManager.get().getGameAnimator(EGameObject.PORTAL);
-                animator.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), x, y));
+                animator.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), x + (int)CameraController.get().getCamX(), y + (int)CameraController.get().getCamY()));
                 GameObjectController.get().addEntity(GameObjectFactory.create(EGameObject.PORTAL, animator, "portal", this.startClick.getV1(), this.startClick.getV2()));
             } catch (SlickException e) {
                 e.printStackTrace();

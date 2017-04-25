@@ -185,26 +185,19 @@ public class GameController extends WindowController {
     }
 
     private void endOfTheGame() {
-        if (this.running && 1 == 2) {
+        if (this.running) {
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
 
-            GameObject winner = GameObjectController.get().getWinner();
-            if (winner != null) {
-                String pseudo = "unknown";
-                String type = winner.getType().getValue();
-
-                String r1 = StringTools.getWord(winner.getId(), "", GlobalVariable.id_delimiter, 0, 2).replace(GlobalVariable.id_delimiter, " ");
-                if (!r1.equals("")) {
-                    pseudo = r1;
-                }
-                NetworkController.get().sendMessage(winner.getId(), new MessageGameEnd(winner.getId(), winner.getType().getValue()));
+            int winners = GameObjectController.get().getWinnerSlimes();
+            if (winners > 0) {
+                NetworkController.get().sendMessage("player1", new MessageGameEnd("", ""));
                 if (GameConfig.mode == EMode.ONLINE) {
-                    this.endOfTheGameForcedByNetwork(winner.getId(), "unknown", winner.getType().getValue());
+                    this.endOfTheGameForcedByNetwork("player1", "unknown", "");
                 } else {
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Good Job ! " + winners + " slimes survived", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
                 }
             } else {
-                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("YOU LOOSE !", ColorTools.get(ColorTools.Colors.GUI_RED), EFont.MODERN, 30, 30, 40))));
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Game Over ! none of your slimes survived", ColorTools.get(ColorTools.Colors.GUI_RED), EFont.MODERN, 30, 30, 40))));
             }
             this.running = false;
         }

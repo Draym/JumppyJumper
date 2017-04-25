@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.animations;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.animations.details.AnimationConfigItem;
 import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
@@ -61,8 +62,8 @@ public class Animator {
         }
     }
 
-    public void draw(Graphics g, float drawX, float drawY, float rotateAngle, boolean flipX, boolean flipY) {
-        if (this.animation != null) {
+    public void draw(Graphics g, float drawX, float drawY, float rotateAngle, boolean flipX, boolean flipY, boolean useCameraMove) {
+            if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getFlippedCopy(flipX, flipY);
             if (rotateAngle != 0) {
                  image.setRotation(rotateAngle);
@@ -70,12 +71,12 @@ public class Animator {
             if (this.effectManager.hasActivity()) {
                 this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
             } else {
-                g.drawImage(image, drawX, drawY);
+                CameraController.get().draw(image, drawX, drawY, useCameraMove);
             }
         }
     }
 
-    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, float rotateAngle, boolean flipX, boolean flipY) {
+    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, float rotateAngle, boolean flipX, boolean flipY, boolean useCameraMove) {
         if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getSubImage(posX, posY, width, height).getFlippedCopy(flipX, flipY);
             if (rotateAngle != 0) {
@@ -84,7 +85,7 @@ public class Animator {
             if (this.effectManager.hasActivity()) {
                 this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
             } else {
-                g.drawImage(image, drawX, drawY);
+                CameraController.get().draw(image, drawX, drawY, useCameraMove);
             }
         }
     }

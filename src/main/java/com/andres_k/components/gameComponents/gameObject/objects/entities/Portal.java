@@ -6,6 +6,7 @@ import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
+import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
 import com.andres_k.components.gameComponents.gameObject.objects.players.Slime;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.SlickException;
@@ -13,30 +14,10 @@ import org.newdawn.slick.SlickException;
 /**
  * Created by kevin on 17/04/2017.
  */
-public class Portal extends PhysicalObject {
+public class Portal extends Obstacle {
 
     public Portal(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.PORTAL, id, x, y, 0, 0, 0, 0, 0);
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public void eventPressed(EInput input) {
-
-    }
-
-    @Override
-    public void eventReleased(EInput input) {
-
-    }
-
-    @Override
-    public Object doTask(Object task) {
-        return null;
+        super(animatorController, EGameObject.PORTAL, id, x, y, 0, 0, 0, 0);
     }
 
     @Override

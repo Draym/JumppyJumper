@@ -27,6 +27,7 @@ public abstract class BackgroundComponent {
         this.x = x;
         this.y = y;
         this.animator = animator;
+        this.animator.setUseCameraMove(false);
     }
 
     // FUNCTIONS

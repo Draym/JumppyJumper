@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.bodies;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.MathTools;
@@ -35,7 +36,7 @@ public class BodyRect {
         this.lastCollisions = new ArrayList<>();
     }
 
-    public void draw(Graphics g, boolean haveToFlip, Shape container, float posX, float posY, float rotateAngle) {
+    public void draw(Graphics g, boolean haveToFlip, Shape container, float posX, float posY, float rotateAngle, boolean useCameraMove) {
         if (this.type == EGameObject.DEFENSE_BODY) {
             g.setColor(Color.cyan);
         } else if (this.type == EGameObject.ATTACK_BODY) {
@@ -43,7 +44,7 @@ public class BodyRect {
         } else if (this.type == EGameObject.BLOCK_BODY) {
             g.setColor(Color.black);
         }
-        g.draw(this.getFlippedRect(haveToFlip, container, posX, posY, rotateAngle));
+        CameraController.get().draw(g, this.getFlippedRect(haveToFlip, container, posX, posY, rotateAngle), useCameraMove);
     }
 
     public void restart() {
