@@ -40,20 +40,20 @@ public abstract class PhysicalObject extends GameObject {
 
         this.saveCollisions.clear();
 
-        List<GameObject> potential = items.stream().filter(item -> checkBorderCollision(item, newPos)).collect(Collectors.toList());
+        List<GameObject> potential = items.stream().filter(GameObject::isVisibleInScreen).filter(item ->checkBorderCollision(item, newPos)).collect(Collectors.toList());
 
         potential.forEach(item -> result.compileWith(checkBodyCollision(item, pos, newPos)));
 
         if (!result.isOnEarth())
             this.setOnEarth(result.isOnEarth());
-        Console.debug(result.toString());
+        //Console.debug(result.toString());
         return result;
     }
 
     private boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
-        if (!CameraController.get().isVisible(enemy)) {
+        /*if (!CameraController.get().isVisible(enemy)) {
             return false;
-        }
+        }*/
         if (!enemy.getId().contains(this.getId())) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();

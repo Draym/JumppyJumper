@@ -6,6 +6,7 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -78,28 +79,31 @@ public class CameraController {
             } else if (owner.getPosX() < halfVisibleMapX) {
                 this.camX = 0;
             }
-            if (owner.getPosY() > (GameConfig.globalMapHeight - halfVisibleMapY) && owner.getPosY() < halfVisibleMapY) {
-                this.camY = owner.getPosY() - halfVisibleMapY;
-            } else if (owner.getPosY() > halfVisibleMapY) {
+            this.camY = owner.getPosY() - halfVisibleMapY;
+            if (this.camY < 0) {
                 this.camY = 0;
+            } else if (this.camY > GameConfig.globalMapHeight - WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2()) {
+                this.camY = GameConfig.globalMapHeight - WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2();
             }
         }
     }
 
     public boolean isVisible(GameObject enemy) {
-        Rectangle screen = new Rectangle(this.camX, this.camY, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2());
+        Rectangle screen = this.getCameraView();
 
         Shape target = enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle());
 
         boolean result = target.intersects(screen) || screen.contains(target);
 
-        if (!result && enemy.getType() == EGameObject.SLIME) {
-            enemy.getAnimatorController().setDeleted(true);
-        }
+        enemy.setVisibleInScreen(result);
         return result;
     }
 
     // GETTERS
+    public Rectangle getCameraView() {
+        return new Rectangle(this.camX, this.camY, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2());
+    }
+
     public Pair<Float, Float> getTransformPos(Pair<Float, Float> pos) {
         return new Pair<>(this.getTransformPosX(pos.getV1()), this.getTransformPosY(pos.getV2()));
     }

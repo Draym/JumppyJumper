@@ -39,6 +39,7 @@ public abstract class GameObject {
     protected float maxLife;
     protected float currentLife;
     protected float damage;
+    protected boolean visibleInScreen;
 
     protected GameObject(AnimatorController animatorController, EGameObject type, String id, Pair<Float, Float> pos, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
         this.movement = new MovementController(pos, 9.8f, moveSpeed, gravitySpeed, weight, false);
@@ -237,6 +238,10 @@ public abstract class GameObject {
         return (this.animatorController == null || this.animatorController.isDeleted());
     }
 
+    public boolean isVisibleInScreen() {
+        return this.visibleInScreen;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -285,6 +290,10 @@ public abstract class GameObject {
     }
 
     // SETTERS
+
+    public void setVisibleInScreen(boolean value) {
+        this.visibleInScreen = value;
+    }
 
     public boolean setCurrentLife(float value) {
         this.currentLife = (value > this.maxLife ? this.maxLife : value);

@@ -157,7 +157,7 @@ public final class GameObjectController {
         if (running) {
             for (int i = 0; i < this.players.size(); ++i) {
                 this.players.get(i).update();
-                if (this.players.get(i).isNeedDelete()) {
+                if (this.players.get(i).isNeedDelete() || !this.players.get(i).isVisibleInScreen()) {
                     this.thisPlayerIsDead((Player) this.players.get(i));
                     this.players.remove(i);
                     --i;
@@ -190,6 +190,7 @@ public final class GameObjectController {
                 saveI = i;
             }
         }
+        Console.debug("(" + this.players.size() + ") -> " + saveI);
         if (this.players.size() > 0) {
             CameraController.get().setIdOwner(this.players.get(saveI).getId());
         }
@@ -259,6 +260,7 @@ public final class GameObjectController {
             }
         }
         this.updateOwnerCameraPlayer();
+        CameraController.get().followOwner(this.getPlayerById(CameraController.get().getIdOwner()));
     }
 
     public void createPlayer(EGameObject type, String id, float startX, int boundX, float startY, int boundY, boolean ally) throws SlickException {

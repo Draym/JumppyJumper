@@ -64,7 +64,7 @@ public final class NetworkController {
             this.connected = true;
             return true;
         } catch (IOException e) {
-            System.err.println("ERROR: " + e.getMessage());
+            Console.write("ERROR: " + e.getMessage());
             CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText("Status: connection failed", ColorTools.get(ColorTools.Colors.GUI_RED), EFont.BASIC, 25, 20, 0))));
             this.connected = false;
             return false;
