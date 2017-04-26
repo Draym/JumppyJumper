@@ -63,7 +63,10 @@ public final class GameObjectController {
         this.winnerSlimes = 0;
         this.bonusPoint = 0;
         this.entities.add(GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:1", 1245, 415));
-        this.entities.add(GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:2", 3735, 415));
+        GameObject m1 = GameObjectFactory.create(EGameObject.MAP, ResourceManager.get().getBackgroundAnimator(EBackground.MAP_1), "Map_1:2", 3735, 415);
+        m1.getAnimatorController().forceCurrentAnimationIndex(1);
+        this.entities.add(m1);
+
         this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:1", 800, 600));
         this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 220, 640));
         this.entities.add(GameObjectFactory.create(EGameObject.GATE, ResourceManager.get().getGameAnimator(EGameObject.GATE), "gate:1", 900, 640));
@@ -283,7 +286,7 @@ public final class GameObjectController {
             } else {
                 newPos = current.predictNextPosition();
 
-                for (int i = 2; i < 6; ++i) {
+                for (int i = 2; i < 10; ++i) {
                     Pair<Float, Float> interPos = new Pair<>(newPos.getV1() - (current.getMovement().calculatePushX() / i), newPos.getV2() - (current.getMovement().calculatePushY() / i));
                     result = current.checkCollision(items, interPos);
                     if (result.hasCollision()) {

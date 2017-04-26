@@ -18,7 +18,7 @@ public class Gate extends Obstacle {
 
     @Override
     public void manageDoHit(GameObject enemy) {
-        if (enemy.getType() == EGameObject.SLIME) {
+        if (enemy.getType() == EGameObject.SLIME && !enemy.getAnimatorController().isDeleted()) {
             try {
                 this.getAnimatorController().changeAnimation(EAnimation.RUN);
             } catch (SlickException e) {

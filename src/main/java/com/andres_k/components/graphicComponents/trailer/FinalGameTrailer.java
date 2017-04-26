@@ -7,6 +7,7 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -33,10 +34,11 @@ public class FinalGameTrailer extends TrailerComponent {
         super.reset();
         this.slimes.clear();
         this.pos = new Pair<>(-64f, 540f);
-        this.finalPos= new Pair<>(800f, 630f);
+        this.finalPos= new Pair<>(600f, 630f);
     }
 
     public void initTrailer(int nbSlimes) throws SlickException {
+        Console.write("NB SLIMES! " + nbSlimes);
         for (int i = 0; i < nbSlimes; ++i) {
             this.slimes.add(ResourceManager.get().getGameAnimator(EGameObject.SLIME));
             this.slimes.get(i).changeAnimation(EAnimation.WIN);
@@ -53,6 +55,7 @@ public class FinalGameTrailer extends TrailerComponent {
         this.running = true;
         this.stopMove = false;
         MusicController.get().stop(ESound.BACKGROUND_GAME);
+        MusicController.get().loop(ESound.BACKGROUND_WIN);
     }
 
     public void draw(Graphics g) throws SlickException {
@@ -69,7 +72,7 @@ public class FinalGameTrailer extends TrailerComponent {
             this.pos.setV2(this.pos.getV2() + 0.2f);
 
             int nbMult = (this.slimes.size() > 3 ? this.slimes.size() - 3 : 0);
-            if (this.pos.getV1() >= this.finalPos.getV1() + (nbMult * 100)) {
+            if (this.pos.getV1() >= this.finalPos.getV1() + 200 + (nbMult * 100)) {
                 this.stopMove = true;
             }
         }

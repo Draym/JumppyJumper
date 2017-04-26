@@ -20,11 +20,9 @@ public class MusicData extends DataManager {
     @Override
     protected void initialiseMethods() throws NoSuchMethodException {
         this.methods.clear();
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundGame")));/*
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundHome")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundSelect")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundMulti")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundCredits")));*/
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundGame")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundWin")));/*
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundHome")));*/
     }
 
     @Override
@@ -34,6 +32,10 @@ public class MusicData extends DataManager {
 
     public void initBackgroundGame() throws NoSuchMethodException, SlickException, JSONException {
         MusicController.get().addMusic(ESound.BACKGROUND_GAME);
+    }
+
+    public void initBackgroundWin() throws NoSuchMethodException, SlickException, JSONException {
+        MusicController.get().addMusic(ESound.BACKGROUND_WIN);
     }
 
     public void initBackgroundHome() throws NoSuchMethodException, SlickException, JSONException {

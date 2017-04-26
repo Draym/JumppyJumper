@@ -2,6 +2,7 @@ package com.andres_k.components.controllers.game;
 
 import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.controllers.EMode;
+import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputGame;
@@ -21,6 +22,7 @@ import com.andres_k.components.networkComponents.networkSend.messageServer.*;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
+import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -29,6 +31,7 @@ import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.DateTools;
@@ -91,6 +94,8 @@ public class GameController extends WindowController {
         this.pause = false;
         this.gameStarted = false;
         this.gameFinish = true;
+        MusicController.get().stop(ESound.BACKGROUND_GAME);
+        MusicController.get().stop(ESound.BACKGROUND_WIN);
         GameObjectController.get().leave();
         if (NetworkController.get().isConnected()) {
             NetworkController.get().disconnect();
@@ -242,6 +247,13 @@ public class GameController extends WindowController {
 
             this.gameFinish = true;
             int winners = GameObjectController.get().getWinnerSlimes();
+
+            int totalScore = GameObjectController.get().bonusPoint * (winners * 100) + GameObjectController.get().bonusPoint * 10;
+
+            ScoreData.setAvailableScore("player", Integer.toString(totalScore));
+            //Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(ETaskType.SETTER, "value",  "player - " + totalScore));
+            //CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.GAME_OBJECT_CONTROLLER, ELocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
+
             if (winners > 0) {
                 NetworkController.get().sendMessage("player1", new MessageGameEnd("", ""));
                 if (GameConfig.mode == EMode.ONLINE) {
@@ -250,13 +262,13 @@ public class GameController extends WindowController {
                     CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Good Job ! ", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 50, 70, 5))));
                     CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText(winners + " slimes survived", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 15, 100, 30))));
                     CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("you get " + GameObjectController.get().bonusPoint + " super coin!", ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 15, 100, 45))));
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Total score : " + GameObjectController.get().bonusPoint, ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 20, 110, 70))));
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Total score : " + totalScore, ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 20, 110, 70))));
                 }
             } else {
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Game Over !", ColorTools.get(ColorTools.Colors.GUI_RED), EFont.MODERN, 50, 60, 5))));
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("none of your slimes survived", ColorTools.get(ColorTools.Colors.GUI_ORANGE), EFont.MODERN, 15, 100, 30))));
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("you get " + GameObjectController.get().bonusPoint + " super coin!", ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 15, 100, 45))));
-                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Total score : " + GameObjectController.get().bonusPoint, ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 20, 110, 70))));
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Total score : " + totalScore, ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 20, 110, 70))));
             }
         }
     }

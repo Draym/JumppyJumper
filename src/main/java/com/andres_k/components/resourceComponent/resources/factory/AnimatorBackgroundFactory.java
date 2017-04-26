@@ -49,8 +49,8 @@ public class AnimatorBackgroundFactory extends AnimatorFactory {
         if (index == ESprites.MAP_1) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_map + "/map1.png"));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/map/map1.json")));
-            animatorController.addAnimation(EAnimation.IDLE, 1, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_map + "/map1.png"));
-            animatorController.addCollision(EAnimation.IDLE, 1, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/map/map1.json")));
+            animatorController.addAnimation(EAnimation.IDLE, 1, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_map + "/map2.png"));
+            animatorController.addCollision(EAnimation.IDLE, 1, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/map/map2.json")));
         } else if (index == ESprites.BACKGROUND_BLOCK_1) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_map + "/backgroundBlock_1.png"));
         }

@@ -12,6 +12,7 @@ public enum ESound {
     BACKGROUND_LOAD(ConfigPath.sound_musics + "/loadTheme.ogg"),
     BACKGROUND_HOME(ConfigPath.sound_musics + "/homeTheme.ogg"),
     BACKGROUND_GAME(ConfigPath.sound_musics + "/gameTheme.ogg"),
+    BACKGROUND_WIN(ConfigPath.sound_musics + "/winTheme.ogg"),
 
     //soundsGame
 
