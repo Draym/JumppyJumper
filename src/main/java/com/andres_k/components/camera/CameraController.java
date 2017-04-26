@@ -8,6 +8,7 @@ import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 /**
@@ -85,10 +86,11 @@ public class CameraController {
     }
 
     public boolean isVisible(GameObject enemy) {
-        return (enemy.getPosX() >= this.camX
-                && enemy.getPosX() <= this.camX + WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1()
-                && enemy.getPosY() >= this.camY
-                && enemy.getPosY() <= this.camY + WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2());
+        Rectangle screen = new Rectangle(this.camX, this.camY, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2());
+
+        Shape target = enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle());
+
+        return target.intersects(screen) || screen.contains(target);
     }
 
     // GETTERS

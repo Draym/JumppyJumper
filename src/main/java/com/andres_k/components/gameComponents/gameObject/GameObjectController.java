@@ -5,6 +5,7 @@ import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
@@ -66,6 +67,18 @@ public final class GameObjectController {
         this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:1", 800, 600));
         this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 220, 640));
         this.entities.add(GameObjectFactory.create(EGameObject.GATE, ResourceManager.get().getGameAnimator(EGameObject.GATE), "gate:1", 900, 640));
+
+
+        GameObject it1 = GameObjectFactory.create(EGameObject.FIRE_GUN, ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN), "fireGun:1", 1370, 685);
+        GameObject it2 = GameObjectFactory.create(EGameObject.FIRE_GUN, ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN), "fireGun:2", 1450, 685);
+
+        it1.getAnimatorController().setEyesDirection(EDirection.RIGHT);
+        it1.getAnimatorController().setRotateAngle(-90);
+        it2.getAnimatorController().setEyesDirection(EDirection.RIGHT);
+        it2.getAnimatorController().setRotateAngle(-90);
+        it2.getAnimatorController().forceNextFrame();
+        this.entities.add(it1);
+        this.entities.add(it2);
     }
 
     // FUNCTIONS
@@ -269,8 +282,18 @@ public final class GameObjectController {
                 newPos = new Pair<>(current.getPosX(), current.getPosY());
             } else {
                 newPos = current.predictNextPosition();
+
+                for (int i = 2; i < 6; ++i) {
+                    Pair<Float, Float> interPos = new Pair<>(newPos.getV1() - (current.getMovement().calculatePushX() / i), newPos.getV2() - (current.getMovement().calculatePushY() / i));
+                    result = current.checkCollision(items, interPos);
+                    if (result.hasCollision()) {
+                        break;
+                    }
+                }
             }
-            result = current.checkCollision(items, newPos);
+            if (!result.hasCollision()) {
+                result = current.checkCollision(items, newPos);
+            }
         }
         return result;
     }
