@@ -4,6 +4,7 @@ import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
@@ -67,21 +68,59 @@ public final class GameObjectController {
         m1.getAnimatorController().forceCurrentAnimationIndex(1);
         this.entities.add(m1);
 
+        // this.entities.add(GameObjectFactory.create(EGameObject.GATE, ResourceManager.get().getGameAnimator(EGameObject.GATE), "gate:0", 900, 600));
+        // MAP 1
         this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:1", 800, 600));
-        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 220, 640));
-        this.entities.add(GameObjectFactory.create(EGameObject.GATE, ResourceManager.get().getGameAnimator(EGameObject.GATE), "gate:1", 900, 640));
+        this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:2", 1783, 455));
+        this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:3", 2290, 289));
+        this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:4", 2290, 372));
+        this.entities.add(GameObjectFactory.create(EGameObject.COIN, ResourceManager.get().getGameAnimator(EGameObject.COIN), "coin:5", 2290, 455));
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 1285, 372));
 
+        GameObject gf1 = GameObjectFactory.create(EGameObject.FIRE_GUN, ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN), "fireGun:1", 1370, 685);
+        GameObject gf2 = GameObjectFactory.create(EGameObject.FIRE_GUN, ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN), "fireGun:2", 1450, 685);
 
-        GameObject it1 = GameObjectFactory.create(EGameObject.FIRE_GUN, ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN), "fireGun:1", 1370, 685);
-        GameObject it2 = GameObjectFactory.create(EGameObject.FIRE_GUN, ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN), "fireGun:2", 1450, 685);
+        gf1.getAnimatorController().setEyesDirection(EDirection.RIGHT);
+        gf1.getAnimatorController().setRotateAngle(-90);
+        gf2.getAnimatorController().setEyesDirection(EDirection.RIGHT);
+        gf2.getAnimatorController().setRotateAngle(-90);
+        gf2.getAnimatorController().forceNextFrame();
+        this.entities.add(gf1);
+        this.entities.add(gf2);
 
-        it1.getAnimatorController().setEyesDirection(EDirection.RIGHT);
-        it1.getAnimatorController().setRotateAngle(-90);
-        it2.getAnimatorController().setEyesDirection(EDirection.RIGHT);
-        it2.getAnimatorController().setRotateAngle(-90);
-        it2.getAnimatorController().forceNextFrame();
-        this.entities.add(it1);
-        this.entities.add(it2);
+        // MAP 2
+        this.entities.add(GameObjectFactory.create(EGameObject.STEEL_WHEEL, ResourceManager.get().getGameAnimator(EGameObject.STEEL_WHEEL), "wheel:1", 630 + 2490, 370));
+        this.entities.add(GameObjectFactory.create(EGameObject.STEEL_WHEEL, ResourceManager.get().getGameAnimator(EGameObject.STEEL_WHEEL), "wheel:2", 950 + 2490, 455));
+        this.entities.add(GameObjectFactory.create(EGameObject.GATE, ResourceManager.get().getGameAnimator(EGameObject.GATE), "gate:1", 2410 + 2490, 260));
+
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 123 + 2490, 621));
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 246 + 2490, 621));
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 369 + 2490, 621));
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 787 + 2490, 455));
+        this.entities.add(GameObjectFactory.create(EGameObject.HEART, ResourceManager.get().getGameAnimator(EGameObject.HEART), "heart:1", 873 + 2590, 372));
+
+        AnimatorController pk = ResourceManager.get().getGameAnimator(EGameObject.STEEL_PIKE);
+        pk.setRotateAngle(180);
+        this.entities.add(GameObjectFactory.create(EGameObject.STEEL_PIKE, pk, "pike:1", 1550 + 2490, 650));
+        //this.entities.add(GameObjectFactory.create(EGameObject.STEEL_PIKE, new AnimatorController(pk), "pike:2", 1677 + 2490, 650));
+        //this.entities.add(GameObjectFactory.create(EGameObject.STEEL_PIKE, new AnimatorController(pk), "pike:2", 1804 + 2490, 650));
+        //this.entities.add(GameObjectFactory.create(EGameObject.STEEL_PIKE, new AnimatorController(pk), "pike:2", 1931 + 2490, 650));
+        //this.entities.add(GameObjectFactory.create(EGameObject.STEEL_PIKE, new AnimatorController(pk), "pike:2", 2058 + 2490, 650));
+
+        AnimatorController gfCtrl = ResourceManager.get().getGameAnimator(EGameObject.FIRE_GUN);
+      //  gfCtrl.setEyesDirection(EDirection.RIGHT);
+        gfCtrl.setRotateAngle(-90);
+        AnimatorController gfCtrl2 = new AnimatorController(gfCtrl);
+        gfCtrl2.forceNextFrame();
+        gfCtrl2.forceNextFrame();
+        this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, gfCtrl, "fireGun:3", 1535 + 2490, 352));
+        //this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, gfCtrl2, "fireGun:4", 1615 + 2490, 352));
+        this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, new AnimatorController(gfCtrl2), "fireGun:5", 1695 + 2490, 352));
+        // this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, new AnimatorController(gfCtrl2), "fireGun:6", 1775 + 2490, 352));
+        this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, new AnimatorController(gfCtrl), "fireGun:7", 1855 + 2490, 352));
+        //this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, new AnimatorController(gfCtrl2), "fireGun:8", 1935 + 2490, 352));
+        this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, new AnimatorController(gfCtrl2), "fireGun:9", 2015 + 2490, 352));
+        // this.entities.add(GameObjectFactory.create(EGameObject.FIRE_GUN, new AnimatorController(gfCtrl2), "fireGun:10", 2095 + 2490, 352));
     }
 
     // FUNCTIONS
@@ -99,16 +138,19 @@ public final class GameObjectController {
 
     public void draw(Graphics g) throws SlickException {
         for (GameObject player : this.players) {
-            player.draw(g);
+            if (CameraController.get().isVisible(player))
+                player.draw(g);
         }
         for (GameObject object : this.entities) {
-            object.draw(g);
+            if (CameraController.get().isVisible(object))
+                object.draw(g);
         }
     }
 
     private void doMovement(GameObject item) {
-        if (item.getType().isIn(EGameObject.ANIMATED))
+        if (item.getType().isIn(EGameObject.ANIMATED)) {
             item.doMovement(this.checkCollision(item, ETaskType.MOVE));
+        }
     }
 
     public void update(boolean running) throws SlickException {
@@ -132,6 +174,8 @@ public final class GameObjectController {
                     this.doMovement(this.entities.get(i));
                 }
             }
+
+            this.updateOwnerCameraPlayer();
             CameraController.get().followOwner(this.getPlayerById(CameraController.get().getIdOwner()));
         }
     }
@@ -141,12 +185,14 @@ public final class GameObjectController {
         int saveI = 0;
 
         for (int i = 0; i < this.players.size(); ++i) {
-            if (maxX <= this.players.get(i).getPosX()) {
+            if ((maxX <= this.players.get(i).getPosX() || maxX == 0) && !this.players.get(i).getAnimatorController().isDeleted()) {
                 maxX = this.players.get(i).getPosX();
                 saveI = i;
             }
         }
-        CameraController.get().setIdOwner(this.players.get(saveI).getId());
+        if (this.players.size() > 0) {
+            CameraController.get().setIdOwner(this.players.get(saveI).getId());
+        }
     }
 
     public void addWinner(String id) {
@@ -180,10 +226,9 @@ public final class GameObjectController {
     }
 
     public void thisPlayerIsDead(Player player) {
-        Console.write("\n A Slime is dead");
+        Console.write("\n A Slime is dead");/*
         if (player.getId().equals(CameraController.get().getIdOwner())) {
-            this.updateOwnerCameraPlayer();
-        }
+        }*/
     }
 
     public void changeGameState(boolean running) throws SlickException {
@@ -285,14 +330,14 @@ public final class GameObjectController {
                 newPos = new Pair<>(current.getPosX(), current.getPosY());
             } else {
                 newPos = current.predictNextPosition();
-
-                for (int i = 2; i < 10; ++i) {
-                    Pair<Float, Float> interPos = new Pair<>(newPos.getV1() - (current.getMovement().calculatePushX() / i), newPos.getV2() - (current.getMovement().calculatePushY() / i));
+/*
+                for (int i = 1; i > 1; --i) {
+                    Pair<Float, Float> interPos = new Pair<>(current.getPosX() + (current.getMovement().calculatePushX() / i), current.getPosY() + (current.getMovement().calculatePushY() / i));
                     result = current.checkCollision(items, interPos);
                     if (result.hasCollision()) {
                         break;
                     }
-                }
+                }*/
             }
             if (!result.hasCollision()) {
                 result = current.checkCollision(items, newPos);

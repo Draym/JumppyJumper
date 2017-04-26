@@ -33,12 +33,15 @@ public class Portal extends Obstacle {
             slime.getMovement().setCoeffX(1);
             slime.getMovement().setCoeffY((float) coeff);*/
             try {
-                if (slime.getAnimatorController().currentAnimationType() != EAnimation.JUMP) {
-                    Console.write("GET HIT");
-                    slime.getAnimatorController().changeAnimation(EAnimation.JUMP);
-                    slime.setOnEarth(false);
-                    slime.getMovement().resetGravity();
-                }
+                //if (slime.getAnimatorController().currentAnimationType() != EAnimation.JUMP) {
+                Console.write("GET HIT");
+                slime.getAnimatorController().changeAnimation(EAnimation.JUMP);
+                //slime.setOnEarth(true);
+                //slime.getMovement().setPushY(-3);
+                slime.getMovement().setPositions(slime.getPosX(), slime.getPosY() - 5);
+                slime.getMovement().resetGravity();
+                slime.getMovement().setPushY(-2);
+                //    }
             } catch (SlickException e) {
                 e.printStackTrace();
             }

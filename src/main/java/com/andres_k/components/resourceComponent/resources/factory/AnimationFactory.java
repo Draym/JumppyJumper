@@ -29,6 +29,10 @@ public class AnimationFactory {
     }
 
     public static Animation createAnimation(SpriteSheet spriteSheet, boolean looping, int startX, int endX, int startY, int endY, int speed[]) {
+        return createAnimation(spriteSheet, looping, false, startX, endX, startY, endY, speed);
+    }
+
+    public static Animation createAnimation(SpriteSheet spriteSheet, boolean looping, boolean pingpong, int startX, int endX, int startY, int endY, int speed[]) {
         Animation animation = new Animation();
         int i = 0;
 
@@ -40,6 +44,7 @@ public class AnimationFactory {
 
         }
         animation.setLooping(looping);
+        animation.setPingPong(pingpong);
         return animation;
     }
 

@@ -25,7 +25,7 @@ public class Bonus extends Obstacle {
             if (this.getType() == EGameObject.COIN) {
                 GameObjectController.get().bonusPoint += 1;
             } else if (this.getType() == EGameObject.HEART) {
-                List<GameObject> players = GameObjectController.get().getPlayers();
+                List<GameObject> players = GameObjectController.get().getPlayers();/*
                 float lowX = 0;
                 int saveI = 0;
 
@@ -34,9 +34,9 @@ public class Bonus extends Obstacle {
                         saveI = i;
                         lowX = players.get(i).getPosX();
                     }
-                }
+                }*/
                 try {
-                    GameObjectController.get().createPlayer(EGameObject.SLIME, "player_slime:" + players.size() + 1, lowX - 70, 100, players.get(saveI).getPosY(), -100, true);
+                    GameObjectController.get().createPlayer(EGameObject.SLIME, "player_slime:" + players.size() + 1, enemy.getPosX() - 40, 100, enemy.getPosY() - 20, -100, true);
                 } catch (SlickException e) {
                     e.printStackTrace();
                 }

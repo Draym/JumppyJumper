@@ -69,7 +69,7 @@ public class MovementController {
             this.pushGravity += this.calculateGravity();
             if (this.exponential < 1) {
                 this.exponential = this.exponential + this.exponential / 2;
-                this.exponential = (this.exponential > 1 ? 1 : this.exponential);
+                this.exponential = (this.exponential > 0.5f ? 0.5f : this.exponential);
             }
         }
     }

@@ -92,7 +92,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/wheel_1.png", 99, 99), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{50, 50}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/wheel_1.json")));
         } else if (index == ESprites.STEEL_PIKE) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/pike_1.png", 127, 215), EAnimation.IDLE.isLoop(), 0, 6, 0, 1, new int[]{100, 100, 100, 100, 100, 100}));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/pike_1.png", 127, 215), EAnimation.IDLE.isLoop(), true, 0, 6, 0, 1, new int[]{200, 130, 130, 130, 130, 200}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/pike_1.json")));
         }
         return animatorController;

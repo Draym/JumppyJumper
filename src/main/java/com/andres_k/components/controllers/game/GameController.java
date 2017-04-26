@@ -248,8 +248,11 @@ public class GameController extends WindowController {
             this.gameFinish = true;
             int winners = GameObjectController.get().getWinnerSlimes();
 
-            int totalScore = GameObjectController.get().bonusPoint * (winners * 100) + GameObjectController.get().bonusPoint * 10;
+            int totalScore = (winners * 1000) + GameObjectController.get().bonusPoint * 10;
 
+            if (GameObjectController.get().bonusPoint > 0) {
+                totalScore *= GameObjectController.get().bonusPoint;
+            }
             ScoreData.setAvailableScore("player", Integer.toString(totalScore));
             //Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(ETaskType.SETTER, "value",  "player - " + totalScore));
             //CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.GAME_OBJECT_CONTROLLER, ELocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));

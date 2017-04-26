@@ -25,8 +25,8 @@ public enum EGameObject {
     BORDER("BORDER", DEADPAN.getValue()),
     PLAYER("PLAYER", ANIMATED.getValue()),
     ENTITY("ENTITY", ANIMATED.getValue()),
-    BONUS("BONUS", ENTITY.getValue()),
-    TRAP("TRAP", ENTITY.getValue()),
+    BONUS("BONUS", SPECIAL.getValue()),
+    TRAP("TRAP", UNBREAKABLE.getValue()),
 
     //items
     MAP("MAP", UNBREAKABLE.getValue()),

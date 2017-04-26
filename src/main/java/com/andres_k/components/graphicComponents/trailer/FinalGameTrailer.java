@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.trailer;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
@@ -38,6 +39,7 @@ public class FinalGameTrailer extends TrailerComponent {
     }
 
     public void initTrailer(int nbSlimes) throws SlickException {
+        this.slimes.clear();
         Console.write("NB SLIMES! " + nbSlimes);
         for (int i = 0; i < nbSlimes; ++i) {
             this.slimes.add(ResourceManager.get().getGameAnimator(EGameObject.SLIME));
@@ -54,6 +56,7 @@ public class FinalGameTrailer extends TrailerComponent {
         this.started = true;
         this.running = true;
         this.stopMove = false;
+        CameraController.get().init();
         MusicController.get().stop(ESound.BACKGROUND_GAME);
         MusicController.get().loop(ESound.BACKGROUND_WIN);
     }
@@ -68,7 +71,7 @@ public class FinalGameTrailer extends TrailerComponent {
 
     public void update() {
         if (!this.stopMove && this.started) {
-            this.pos.setV1(this.pos.getV1() + 2f);
+            this.pos.setV1(this.pos.getV1() + 5f);
             this.pos.setV2(this.pos.getV2() + 0.2f);
 
             int nbMult = (this.slimes.size() > 3 ? this.slimes.size() - 3 : 0);

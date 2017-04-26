@@ -1,5 +1,6 @@
 package com.andres_k.components.camera;
 
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.utils.configs.GameConfig;
@@ -90,7 +91,12 @@ public class CameraController {
 
         Shape target = enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle());
 
-        return target.intersects(screen) || screen.contains(target);
+        boolean result = target.intersects(screen) || screen.contains(target);
+
+        if (!result && enemy.getType() == EGameObject.SLIME) {
+            enemy.getAnimatorController().setDeleted(true);
+        }
+        return result;
     }
 
     // GETTERS
