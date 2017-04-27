@@ -53,6 +53,7 @@ public abstract class GameObject {
         this.damage = damage;
         this.wasHit = false;
         this.lastAttacker = null;
+        this.visibleInScreen = true;
         this.initResetAttackerTimer(false);
     }
 

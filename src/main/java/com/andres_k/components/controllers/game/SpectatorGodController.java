@@ -54,7 +54,7 @@ public class SpectatorGodController {
             this.indicePortal.update();
             this.indicePortal.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), MouseController.get().getMouseX(), MouseController.get().getMouseY()));
 
-            Console.write("coeff: " + Math.tan(MathTools.toRadian(this.indicePortal.getRotateAngle())) + "    angle: " + this.indicePortal.getRotateAngle());
+            //Console.write("coeff: " + Math.tan(MathTools.toRadian(this.indicePortal.getRotateAngle())) + "    angle: " + this.indicePortal.getRotateAngle());
         }
     }
 

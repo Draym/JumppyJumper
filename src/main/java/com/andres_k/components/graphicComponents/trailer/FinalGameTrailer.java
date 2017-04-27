@@ -72,7 +72,7 @@ public class FinalGameTrailer extends TrailerComponent {
     public void update() {
         if (!this.stopMove && this.started) {
             this.pos.setV1(this.pos.getV1() + 5f);
-            this.pos.setV2(this.pos.getV2() + 0.2f);
+            this.pos.setV2(this.pos.getV2() + 0.4f);
 
             int nbMult = (this.slimes.size() > 3 ? this.slimes.size() - 3 : 0);
             if (this.pos.getV1() >= this.finalPos.getV1() + 200 + (nbMult * 100)) {

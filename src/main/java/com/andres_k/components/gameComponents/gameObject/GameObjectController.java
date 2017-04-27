@@ -269,12 +269,14 @@ public final class GameObjectController {
         float randomY = startY;
         boolean checked = false;
 
+        Console.write("CREATE PLAYER : " + id);
         while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
             if (checked) {
                 randomX = (float) RandomTools.getInt(boundX) + startX;
                 randomY = (float) RandomTools.getInt(boundY) + startY;
             }
             player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
+            Console.write("p: " + player);
             player.doTask(new Tuple<>(ETaskType.SETTER, "teamOne", ally));
             checked = true;
         }

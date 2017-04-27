@@ -20,7 +20,6 @@ public class Bonus extends Obstacle {
     @Override
     public void manageDoHit(GameObject enemy) {
         if (this.alive && enemy.getType() == EGameObject.SLIME) {
-            this.alive = false;
             this.getAnimatorController().setDeleted(true);
             if (this.getType() == EGameObject.COIN) {
                 GameObjectController.get().bonusPoint += 1;
@@ -36,11 +35,12 @@ public class Bonus extends Obstacle {
                     }
                 }*/
                 try {
-                    GameObjectController.get().createPlayer(EGameObject.SLIME, "player_slime:" + players.size() + 1, enemy.getPosX() - 40, 100, enemy.getPosY() - 20, -100, true);
+                    GameObjectController.get().createPlayer(EGameObject.SLIME, "player_slime:" + (players.size() + 1), enemy.getPosX() - 40, 100, enemy.getPosY() - 20, -100, true);
                 } catch (SlickException e) {
                     e.printStackTrace();
                 }
             }
+            this.alive = false;
         }
     }
 }

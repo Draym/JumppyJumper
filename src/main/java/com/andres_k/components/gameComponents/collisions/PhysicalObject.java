@@ -51,9 +51,6 @@ public abstract class PhysicalObject extends GameObject {
     }
 
     private boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
-        /*if (!CameraController.get().isVisible(enemy)) {
-            return false;
-        }*/
         if (!enemy.getId().contains(this.getId())) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();
