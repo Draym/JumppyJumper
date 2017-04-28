@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.collisions;
 
 import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.bodies.BodyRect;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
@@ -40,7 +41,7 @@ public abstract class PhysicalObject extends GameObject {
 
         this.saveCollisions.clear();
 
-        List<GameObject> potential = items.stream().filter(GameObject::isVisibleInScreen).filter(item ->checkBorderCollision(item, newPos)).collect(Collectors.toList());
+        List<GameObject> potential = items.stream().filter(GameObject::isVisibleInScreen).filter(item -> checkBorderCollision(item, newPos)).collect(Collectors.toList());
 
         potential.forEach(item -> result.compileWith(checkBodyCollision(item, pos, newPos)));
 
@@ -130,6 +131,11 @@ public abstract class PhysicalObject extends GameObject {
                 enemy.manageEachCollisionExceptValidHit(hisRect.getType(), this, myRect.getType());
             }
         }
+
+        if (enemy.getType() == EGameObject.PORTAL && this.getAnimatorController().currentAnimationType() != EAnimation.FALL) {
+            return;
+        }
+
         if (myRect.getType() != EGameObject.ATTACK_BODY && hisRect.getType() != EGameObject.ATTACK_BODY && !enemy.getType().isIn(EGameObject.ANIMATED)) {
             float diffPos;
             float diffNewPos;

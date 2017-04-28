@@ -38,9 +38,9 @@ public class Portal extends Obstacle {
                 slime.getAnimatorController().changeAnimation(EAnimation.JUMP);
                 //slime.setOnEarth(true);
                 //slime.getMovement().setPushY(-3);
-                slime.getMovement().setPositions(slime.getPosX(), slime.getPosY() - 5);
+               // slime.getMovement().setPositions(slime.getPosX(), slime.getPosY() - 5);
                 slime.getMovement().resetGravity();
-                slime.getMovement().setPushY(-2);
+                //slime.getMovement().setPushY(-2);
                 //    }
             } catch (SlickException e) {
                 e.printStackTrace();
