@@ -17,6 +17,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by kevin on 24/04/2017.
@@ -26,12 +28,14 @@ public class SpectatorGodController {
     private Pair<Integer, Integer> spriteSizes;
     private Pair<Integer, Integer> startClick;
     private boolean clicked;
+    private int availablePortal;
+    private Timer timerCreatePortal;
 
     public SpectatorGodController() {
-        this.clicked = false;
         this.startClick = new Pair<>(-1, -1);
         this.indicePortal = null;
         this.spriteSizes = new Pair<>(0, 0);
+        this.timerCreatePortal = new Timer( );
     }
 
     public void init() throws SlickException {
@@ -40,8 +44,22 @@ public class SpectatorGodController {
         this.spriteSizes.setV2(this.indicePortal.currentAnimation().getHeight());
     }
 
-    public void reset() {
+    public void enter() {
         this.clicked = false;
+        this.availablePortal = 10;
+        this.timerCreatePortal.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (availablePortal < 10) {
+                    availablePortal += 1;
+                    System.out.println("+1");
+                }
+            }
+        }, 0, 1000);
+    }
+
+    public void leave() {
+        this.timerCreatePortal.cancel();
     }
 
     public void draw(Graphics g) throws SlickException {
@@ -67,9 +85,11 @@ public class SpectatorGodController {
     }
 
     public void mousePressed(int button, int x, int y) {
-        this.clicked = (button == 0);
-        this.startClick.setV1(x + (int)CameraController.get().getCamX());
-        this.startClick.setV2(y + (int)CameraController.get().getCamY());
+        if (this.availablePortal > 0) {
+            this.clicked = (button == 0);
+            this.startClick.setV1(x + (int) CameraController.get().getCamX());
+            this.startClick.setV2(y + (int) CameraController.get().getCamY());
+        }
     }
 
     public void mouseReleased(int button, int x, int y) {
@@ -79,6 +99,7 @@ public class SpectatorGodController {
                 AnimatorController animator = ResourceManager.get().getGameAnimator(EGameObject.PORTAL);
                 animator.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), x + (int)CameraController.get().getCamX(), y + (int)CameraController.get().getCamY()));
                 GameObjectController.get().addEntity(GameObjectFactory.create(EGameObject.PORTAL, animator, "portal", this.startClick.getV1(), this.startClick.getV2()));
+                this.availablePortal -= 1;
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -89,10 +110,15 @@ public class SpectatorGodController {
                     CameraController.get().getTransformPosY(entity.getPosY()), entity.getAnimatorController().getRotateAngle()).contains(x, y)).forEachOrdered(entity -> {
                 if (((Portal) entity).isSelected()) {
                     entity.getAnimatorController().setDeleted(true);
+                    this.availablePortal += 1;
                 } else {
                     ((Portal) entity).setSelected(true);
                 }
             });
         }
+    }
+
+    public int getAvailablePortal() {
+        return this.availablePortal;
     }
 }

@@ -68,8 +68,7 @@ public class GameController extends WindowController {
         this.gameFinish = false;
         this.gameStarted = false;
         this.pause = false;
-        CameraController.get().init();
-        this.spectatorGodController.reset();
+        this.spectatorGodController.enter();
         this.resetFinalTrailer();
         GameObjectController.get().enter();
         this.createPlayerForGame();
@@ -152,7 +151,7 @@ public class GameController extends WindowController {
 
     @Override
     public void keyPressed(int key, char c) {
-        if (!this.pause) {
+        if (!this.pause && this.gameStarted && !this.gameFinish) {
             EInput result = this.inputGame.checkInput(key);
             if (!this.spectatorGodController.keyPressed(result)) {
                 GameObjectController.get().event(EInput.KEY_PRESSED, result);
@@ -165,7 +164,7 @@ public class GameController extends WindowController {
         if (key == Input.KEY_ESCAPE && this.gameStarted) {
             this.pause = !this.pause;
         }
-        if (!this.pause) {
+        if (!this.pause && this.gameStarted && !this.gameFinish) {
             EInput result = this.inputGame.checkInput(key);
             if (!this.spectatorGodController.keyReleased(result)) {
                 GameObjectController.get().event(EInput.KEY_RELEASED, result);
@@ -224,6 +223,7 @@ public class GameController extends WindowController {
 
     private void launchFinalTrailer() throws SlickException {
         if (GameObjectController.get().getWinnerSlimes() > 0) {
+            this.spectatorGodController.leave();
             this.finalTrailer.initTrailer(GameObjectController.get().getWinnerSlimes());
             this.finalTrailer.launchTrailer();
             this.backgroundManager.getComponent(EBackground.MAP_1).activate(false);
