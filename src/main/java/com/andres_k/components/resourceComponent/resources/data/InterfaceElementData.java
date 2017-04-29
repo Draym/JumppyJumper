@@ -65,12 +65,11 @@ public class InterfaceElementData extends DataManager {
 
     public void initControlsContent() throws NoSuchMethodException, SlickException, JSONException {
         PaginatedList playerControls = new PaginatedList(ELocation.GUI_ELEMENT_PlayerControls.getId(), new ColorRect(new Rectangle(5, 50, 570, 390)), new ColorRect(new Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true, true);
-        playerControls.createList(ElementFactory.createText("Player 1", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
-        //playerControls.createList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+        playerControls.createList(ElementFactory.createText("Player", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         InputData.getAvailableInput().entrySet().forEach(entry -> {
             TextElement title = new TextElement(new StringTimer(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
             TextElement content = new AlterableInputControlElement(entry.getKey().getValue(), new StringTimer(entry.getValue()), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0, Element.PositionInBody.MIDDLE_MID, true);
-            playerControls.addItem("Player " + (entry.getKey().getIndex()), new ElementWithTitle(new ColorRect(new Rectangle(0, 0, 0, 0)), title, content, true));
+            playerControls.addItem("Player", new ElementWithTitle(new ColorRect(new Rectangle(0, 0, 0, 0)), title, content, true));
         });
         GuiElementsManager.get().add(playerControls.getId(), playerControls);
     }
