@@ -12,7 +12,10 @@ public enum EInput {
     MOUSE_RELEASED("MOUSE" + RELEASED.value), MOUSE_PRESSED("MOUSE" + PRESSED.value),
 
     // ACTIONS
-    PORTAL_CHANGE("PORTAL_CHANGE");
+    PORTAL_REPULSE("PORTAL_REPULSE"),
+    PORTAL_ATTRACT("PORTAL_ATTRACT"),
+    PAUSE("PAUSE"),
+    CHECKPOINT("CHECKPOINT");
 
 
     private final int index;

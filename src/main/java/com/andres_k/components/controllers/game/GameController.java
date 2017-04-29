@@ -52,6 +52,7 @@ public class GameController extends WindowController {
     private SpectatorGodController spectatorGodController;
     private FinalGameTrailer finalTrailer;
     private boolean pause;
+    private boolean technicalPause;
     private boolean gameStarted;
     private boolean gameFinish;
 
@@ -63,11 +64,16 @@ public class GameController extends WindowController {
         this.finalTrailer = new FinalGameTrailer();
     }
 
-    @Override
-    public void enter() throws SlickException {
+    private void initialiseStatus() {
         this.gameFinish = false;
         this.gameStarted = false;
         this.pause = false;
+        this.technicalPause = false;
+    }
+
+    @Override
+    public void enter() throws SlickException {
+        this.initialiseStatus();
         this.spectatorGodController.enter();
         this.resetFinalTrailer();
         GameObjectController.get().enter();
@@ -90,9 +96,7 @@ public class GameController extends WindowController {
 
     @Override
     public void leave() {
-        this.pause = false;
-        this.gameStarted = false;
-        this.gameFinish = true;
+        this.initialiseStatus();
         MusicController.get().stop(ESound.BACKGROUND_GAME);
         MusicController.get().stop(ESound.BACKGROUND_WIN);
         GameObjectController.get().leave();
@@ -126,14 +130,16 @@ public class GameController extends WindowController {
 
     @Override
     public void update(GameContainer gameContainer) throws SlickException {
-        if (!this.pause) {
+        if (!this.pause && !this.technicalPause && this.gameStarted) {
             this.backgroundManager.update();
+        }
+        if (this.gameIsPlayable()) {
+            this.spectatorGodController.update();
             if (GameObjectController.get().isTheEndOfTheGame() && !this.finalTrailer.isStarted()) {
                 this.launchFinalTrailer();
             }
         }
         if (this.gameIsRunning()) {
-            this.spectatorGodController.update();
             GameObjectController.get().update(!this.pause);
         }
         if (this.finalTrailer.isFinished()) {
@@ -151,9 +157,9 @@ public class GameController extends WindowController {
 
     @Override
     public void keyPressed(int key, char c) {
-        if (this.gameIsRunning()) {
+        if (this.gameIsPlayable()) {
             EInput result = this.inputGame.checkInput(key);
-            if (!this.spectatorGodController.keyPressed(result)) {
+            if (!this.spectatorGodController.keyPressed(result) && this.gameIsRunning()) {
                 GameObjectController.get().event(EInput.KEY_PRESSED, result);
             }
         }
@@ -164,9 +170,12 @@ public class GameController extends WindowController {
         if (key == Input.KEY_ESCAPE && this.gameStarted) {
             this.pause = !this.pause;
         }
-        if (this.gameIsRunning()) {
+        if (this.gameIsPlayable()) {
             EInput result = this.inputGame.checkInput(key);
-            if (!this.spectatorGodController.keyReleased(result)) {
+            if (result == EInput.PAUSE) {
+                this.technicalPause = !this.technicalPause;
+            }
+            else if (!this.spectatorGodController.keyReleased(result) && this.gameIsRunning()) {
                 GameObjectController.get().event(EInput.KEY_RELEASED, result);
             }
         }
@@ -179,14 +188,14 @@ public class GameController extends WindowController {
 
     @Override
     public void mousePressed(int button, int x, int y) {
-        if (this.gameIsRunning()) {
+        if (this.gameIsPlayable()) {
             this.spectatorGodController.mousePressed(button, x, y);
         }
     }
 
     @Override
     public void mouseReleased(int button, int x, int y) {
-        if (this.gameIsRunning()) {
+        if (this.gameIsPlayable()) {
             this.spectatorGodController.mouseReleased(button, x, y);
         }
     }
@@ -342,6 +351,10 @@ public class GameController extends WindowController {
     }
 
     public boolean gameIsRunning() {
+        return !this.pause && !this.technicalPause && this.gameStarted && !this.gameFinish;
+    }
+
+    public boolean gameIsPlayable() {
         return !this.pause && this.gameStarted && !this.gameFinish;
     }
 }

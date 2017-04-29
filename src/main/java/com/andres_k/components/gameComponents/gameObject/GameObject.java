@@ -165,16 +165,18 @@ public abstract class GameObject {
     }
 
     protected final void resetHitStatus() {
+        this.wasHit = false;
+        /*
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 wasHit = false;
             }
-        }, 100);
+        }, 100);*/
     }
 
     private void initResetAttackerTimer(boolean useTimer) {
-        this.resetAttackerTimer = 400;
+        this.resetAttackerTimer = 10000;
         this.useAttackerTimer = useTimer;
     }
 
@@ -265,6 +267,10 @@ public abstract class GameObject {
 
     public MovementController getMovement() {
         return this.movement;
+    }
+
+    public boolean isLastAttacker(String id) {
+        return this.lastAttacker != null && this.getLastAttacker().getId().equals(id);
     }
 
     public GameObject getLastAttacker() {

@@ -19,6 +19,7 @@ import org.newdawn.slick.SlickException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 /**
  * Created by kevin on 24/04/2017.
@@ -83,14 +84,16 @@ public class SpectatorGodController {
     }
 
     public boolean keyReleased(EInput result) {
-        if (result == EInput.PORTAL_CHANGE) {
-            this.portalChoice = (this.portalChoice == EGameObject.PORTAL_ATTRACT ? EGameObject.PORTAL_REPULSE : EGameObject.PORTAL_ATTRACT);
+        if (result == EInput.PORTAL_ATTRACT || result == EInput.PORTAL_REPULSE) {
+            this.portalChoice = EGameObject.getEnumByType(result.getValue());
             try {
                 this.indicePortal = ResourceManager.get().getGameAnimator(this.portalChoice);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
             return true;
+        } else if (result == EInput.CHECKPOINT) {
+
         }
         return false;
     }
@@ -109,7 +112,7 @@ public class SpectatorGodController {
             try {
                 AnimatorController animator = ResourceManager.get().getGameAnimator(this.portalChoice);
                 animator.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), x + (int)CameraController.get().getCamX(), y + (int)CameraController.get().getCamY()));
-                GameObjectController.get().addEntity(GameObjectFactory.create(this.portalChoice, animator, "portal", this.startClick.getV1(), this.startClick.getV2()));
+                GameObjectController.get().addEntity(GameObjectFactory.create(this.portalChoice, animator, UUID.randomUUID().toString(), this.startClick.getV1(), this.startClick.getV2()));
                 this.availablePortal -= 1;
             } catch (SlickException e) {
                 e.printStackTrace();

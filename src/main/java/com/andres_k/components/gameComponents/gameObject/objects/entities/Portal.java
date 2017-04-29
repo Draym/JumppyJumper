@@ -27,7 +27,7 @@ public class Portal extends Obstacle {
 
     @Override
     public void manageDoHit(GameObject enemy) {
-        if (enemy.getType() == EGameObject.SLIME) {
+        if (enemy.getType() == EGameObject.SLIME && enemy.isLastAttacker(this.getId())) {
             Slime slime = (Slime) enemy;
 
             double maxX = 1;
