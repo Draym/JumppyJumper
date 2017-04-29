@@ -44,8 +44,6 @@ public class InterfaceElementData extends DataManager {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initVolumesContent")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initControlsContent")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initGokuCombosList")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initVegetaCombosList")));
     }
 
     @Override
@@ -73,12 +71,4 @@ public class InterfaceElementData extends DataManager {
         });
         GuiElementsManager.get().add(playerControls.getId(), playerControls);
     }
-
-    public void initGokuCombosList() throws NoSuchMethodException, SlickException, JSONException {
-    }
-
-    public void initVegetaCombosList() throws NoSuchMethodException, SlickException, JSONException {
-
-    }
-
 }
