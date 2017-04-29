@@ -37,7 +37,7 @@ public class BodySprite {
 
     public void draw(Graphics g, boolean haveToFlip, float posX, float posY, float rotateAngle, boolean useCameraMove) {
         g.setColor(Color.red);
-        Shape mySprite = this.getFlippedSprite(haveToFlip, posX, posY, rotateAngle);
+        Shape mySprite = this.getFlippedBody(haveToFlip, posX, posY, rotateAngle);
         CameraController.get().draw(g, mySprite, useCameraMove);
         g.setColor(Color.green);
         Shape myBody = this.getFlippedBody(haveToFlip, posX, posY, rotateAngle);

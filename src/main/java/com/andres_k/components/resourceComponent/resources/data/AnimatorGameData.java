@@ -35,6 +35,7 @@ public class AnimatorGameData extends DataManager {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initPlayers")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems2")));
     }
 
     @Override
@@ -50,8 +51,12 @@ public class AnimatorGameData extends DataManager {
     public void initItems() throws NoSuchMethodException, SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GROUND), EGameObject.GROUND);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.WALL), EGameObject.WALL);
-        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.PORTAL), EGameObject.PORTAL);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.PORTAL_ATTRACT), EGameObject.PORTAL_ATTRACT);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.PORTAL_REPULSE), EGameObject.PORTAL_REPULSE);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GATE), EGameObject.GATE);
+    }
+
+    public void initItems2() throws NoSuchMethodException, SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.HEART), EGameObject.HEART);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.COIN), EGameObject.COIN);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.STEEL_WHEEL), EGameObject.STEEL_WHEEL);

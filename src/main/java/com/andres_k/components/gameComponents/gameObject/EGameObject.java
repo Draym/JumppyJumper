@@ -33,6 +33,8 @@ public enum EGameObject {
     GROUND("GROUND", PLATFORM.getValue()),
     WALL("WALL", BORDER.getValue()),
     PORTAL("PORTAL", SPECIAL.getValue()),
+    PORTAL_REPULSE("PORTAL_REPULSE", PORTAL.getValue()),
+    PORTAL_ATTRACT("PORTAL_ATTRACT", PORTAL.getValue()),
     COIN("COIN", BONUS.getValue()),
     HEART("HEART", BONUS.getValue()),
     GATE("GATE", SPECIAL.getValue()),

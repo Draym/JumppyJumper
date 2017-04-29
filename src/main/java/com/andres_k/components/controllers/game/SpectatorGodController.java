@@ -28,6 +28,7 @@ public class SpectatorGodController {
     private Pair<Integer, Integer> spriteSizes;
     private Pair<Integer, Integer> startClick;
     private boolean clicked;
+    private EGameObject portalChoice;
     private int availablePortal;
     private Timer timerCreatePortal;
 
@@ -39,7 +40,8 @@ public class SpectatorGodController {
     }
 
     public void init() throws SlickException {
-        this.indicePortal = ResourceManager.get().getGameAnimator(EGameObject.PORTAL);
+        this.portalChoice = EGameObject.PORTAL_REPULSE;
+        this.indicePortal = ResourceManager.get().getGameAnimator(this.portalChoice);
         this.spriteSizes.setV1(this.indicePortal.currentAnimation().getWidth());
         this.spriteSizes.setV2(this.indicePortal.currentAnimation().getHeight());
     }
@@ -47,12 +49,12 @@ public class SpectatorGodController {
     public void enter() {
         this.clicked = false;
         this.availablePortal = 10;
+        this.portalChoice = EGameObject.PORTAL_REPULSE;
         this.timerCreatePortal.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (availablePortal < 10) {
                     availablePortal += 1;
-                    System.out.println("+1");
                 }
             }
         }, 0, 1000);
@@ -72,7 +74,7 @@ public class SpectatorGodController {
             this.indicePortal.update();
             this.indicePortal.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), MouseController.get().getMouseX(), MouseController.get().getMouseY()));
 
-            //Console.write("coeff: " + Math.tan(MathTools.toRadian(this.indicePortal.getRotateAngle())) + "    angle: " + this.indicePortal.getRotateAngle());
+            Console.write("coeff: " + Math.tan(Math.toRadians(this.indicePortal.getRotateAngle())) + "    angle: " + this.indicePortal.getRotateAngle() + "   coeff2: " + (-1 / Math.tan(Math.toRadians(this.indicePortal.getRotateAngle()))));
         }
     }
 
@@ -81,6 +83,15 @@ public class SpectatorGodController {
     }
 
     public boolean keyReleased(EInput result) {
+        if (result == EInput.PORTAL_CHANGE) {
+            this.portalChoice = (this.portalChoice == EGameObject.PORTAL_ATTRACT ? EGameObject.PORTAL_REPULSE : EGameObject.PORTAL_ATTRACT);
+            try {
+                this.indicePortal = ResourceManager.get().getGameAnimator(this.portalChoice);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
         return false;
     }
 
@@ -96,9 +107,9 @@ public class SpectatorGodController {
         if (button == 0 && this.clicked) {
             this.clicked = false;
             try {
-                AnimatorController animator = ResourceManager.get().getGameAnimator(EGameObject.PORTAL);
+                AnimatorController animator = ResourceManager.get().getGameAnimator(this.portalChoice);
                 animator.setRotateAngle(MathTools.getAngle(this.startClick.getV1(), this.startClick.getV2(), x + (int)CameraController.get().getCamX(), y + (int)CameraController.get().getCamY()));
-                GameObjectController.get().addEntity(GameObjectFactory.create(EGameObject.PORTAL, animator, "portal", this.startClick.getV1(), this.startClick.getV2()));
+                GameObjectController.get().addEntity(GameObjectFactory.create(this.portalChoice, animator, "portal", this.startClick.getV1(), this.startClick.getV2()));
                 this.availablePortal -= 1;
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -106,7 +117,7 @@ public class SpectatorGodController {
         } else {
             List<GameObject> entities = GameObjectController.get().getEntities();
 
-            entities.stream().filter(entity -> entity.getType() == EGameObject.PORTAL).filter(entity -> entity.getBody().getFlippedBody(entity.getAnimatorController().getEyesDirection().isHorizontalFlip(), CameraController.get().getTransformPosX(entity.getPosX()),
+            entities.stream().filter(entity -> entity.getType().isIn(EGameObject.PORTAL)).filter(entity -> entity.getBody().getFlippedBody(entity.getAnimatorController().getEyesDirection().isHorizontalFlip(), CameraController.get().getTransformPosX(entity.getPosX()),
                     CameraController.get().getTransformPosY(entity.getPosY()), entity.getAnimatorController().getRotateAngle()).contains(x, y)).forEachOrdered(entity -> {
                 if (((Portal) entity).isSelected()) {
                     entity.getAnimatorController().setDeleted(true);

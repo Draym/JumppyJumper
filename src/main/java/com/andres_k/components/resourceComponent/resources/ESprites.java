@@ -55,7 +55,8 @@ public enum ESprites {
     //gameItem
     WALL(ITEM.getIndex()),
     GROUND(ITEM.getIndex()),
-    PORTAL(ITEM.getIndex()),
+    PORTAL_ATTRACT(ITEM.getIndex()),
+    PORTAL_REPULSE(ITEM.getIndex()),
     HEART(ITEM.getIndex()),
     COIN(ITEM.getIndex()),
     GATE(ITEM.getIndex()),

@@ -64,7 +64,7 @@ public abstract class PhysicalObject extends GameObject {
                     pos.getV1(), pos.getV2(), this.getAnimatorController().getRotateAngle())
                     .intersects(hisBody.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(),
                             enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle()))) {
-                this.saveCollisions.put(myBody.getId(), hisBody.getId());
+                //this.saveCollisions.put(myBody.getId(), hisBody.getId());
                 return true;
             }
         }
@@ -132,7 +132,7 @@ public abstract class PhysicalObject extends GameObject {
             }
         }
 
-        if (enemy.getType() == EGameObject.PORTAL && this.getAnimatorController().currentAnimationType() != EAnimation.FALL) {
+        if (enemy.getType() == EGameObject.PORTAL_ATTRACT) {
             return;
         }
 

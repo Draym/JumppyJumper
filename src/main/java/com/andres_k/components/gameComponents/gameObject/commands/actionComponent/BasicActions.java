@@ -148,7 +148,7 @@ public class BasicActions {
         object.getMovement().setPushY(0f);
 
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
-            object.getMovement().setPushX(GameConfig.speedTravel);
+            object.getMovement().setPushX(/*GameConfig.speedTravel * */object.getMovement().getCoeffX());
         }
         if (!object.isOnEarth()) {
             if (object.getMovement().getGravity() > 8) {
@@ -162,6 +162,9 @@ public class BasicActions {
 
     public static void run(GameObject object) {
         object.getMovement().setPushY(0);
+        object.getMovement().setCoeffX(1f);
+        object.getMovement().setCoeffY(1f);
+        object.getAnimatorController().setEyesDirection(EDirection.RIGHT);
         //object.getMovement().setUseGravity(true);
         if (object.isOnEarth()) {
             object.getMovement().addPushY(-2.5f);
@@ -175,8 +178,8 @@ public class BasicActions {
 
     public static void jump(GameObject object) {
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
-            object.getMovement().setPushX(GameConfig.speedTravel * object.getMovement().getCoeffX());
+            object.getMovement().setPushX(/*GameConfig.speedTravel * */ object.getMovement().getCoeffX());
         }
-        object.getMovement().setPushY(-GameConfig.speedJump * object.getMovement().getCoeffY());
+        object.getMovement().setPushY(/*-GameConfig.speedJump * */object.getMovement().getCoeffY());
     }
 }

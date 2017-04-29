@@ -19,10 +19,6 @@ public class MathTools {
         return (float) angle;
     }
 
-    public static float toRadian(float angle){
-        return (float)(angle * Math.PI / 180);
-    }
-
     public static Pair<Float, Float> movePredict(float angle, float speed, float delta) {
         double addX = Math.cos(angle * Math.PI / 180);
         double addY = Math.sin(angle * Math.PI / 180);
@@ -49,7 +45,7 @@ public class MathTools {
 
     public static Shape rotateShape(Shape shape, float angle) {
         if (angle != 0) {
-            return shape.transform(Transform.createRotateTransform(MathTools.toRadian(angle), shape.getCenterX(), shape.getCenterY()));
+            return shape.transform(Transform.createRotateTransform((float)Math.toRadians((double)angle), shape.getCenterX(), shape.getCenterY()));
         }
         return shape;
     }
@@ -71,7 +67,11 @@ public class MathTools {
     }
 
     public static float abs(float value) {
-        return (value > 0 ? value : value * -1);
+        return (value > 0.00f ? value : value * -1);
+    }
+
+    public static boolean isUpper(double[] d1, double[] d2, double[] p1) {
+        return !(((d2[0] - d1[0])*(p1[1] - d1[1]) - (d2[1] - d1[1])*(p1[0] - d1[0])) > 0);
     }
 
     public static Rectangle createRectangle(Pair<Float, Float> p1, Pair<Float, Float> p2){

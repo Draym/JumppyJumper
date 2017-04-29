@@ -112,7 +112,7 @@ public class MovementController {
         if (!collisionResult.hasCollisionX()) {
             this.positions.setV1(this.getNextX());
         } else if (this.moveSpeed != 0) {
-            CollisionItem item = collisionResult.getLowCollisionX(new EGameObject[]{EGameObject.PLATFORM, EGameObject.PORTAL});
+            CollisionItem item = collisionResult.getLowCollisionX(new EGameObject[]{EGameObject.PLATFORM, EGameObject.PORTAL_ATTRACT});
 
             if (item != null) {
                 int mult = (item.getCollisionDirection() == EDirection.RIGHT ? 1 : -1);

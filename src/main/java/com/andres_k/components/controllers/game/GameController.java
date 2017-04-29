@@ -132,7 +132,7 @@ public class GameController extends WindowController {
                 this.launchFinalTrailer();
             }
         }
-        if (!this.gameFinish && !this.pause && this.gameStarted) {
+        if (this.gameIsRunning()) {
             this.spectatorGodController.update();
             GameObjectController.get().update(!this.pause);
         }
@@ -151,7 +151,7 @@ public class GameController extends WindowController {
 
     @Override
     public void keyPressed(int key, char c) {
-        if (!this.pause && this.gameStarted && !this.gameFinish) {
+        if (this.gameIsRunning()) {
             EInput result = this.inputGame.checkInput(key);
             if (!this.spectatorGodController.keyPressed(result)) {
                 GameObjectController.get().event(EInput.KEY_PRESSED, result);
@@ -164,7 +164,7 @@ public class GameController extends WindowController {
         if (key == Input.KEY_ESCAPE && this.gameStarted) {
             this.pause = !this.pause;
         }
-        if (!this.pause && this.gameStarted && !this.gameFinish) {
+        if (this.gameIsRunning()) {
             EInput result = this.inputGame.checkInput(key);
             if (!this.spectatorGodController.keyReleased(result)) {
                 GameObjectController.get().event(EInput.KEY_RELEASED, result);
@@ -179,14 +179,14 @@ public class GameController extends WindowController {
 
     @Override
     public void mousePressed(int button, int x, int y) {
-        if (!this.pause) {
+        if (this.gameIsRunning()) {
             this.spectatorGodController.mousePressed(button, x, y);
         }
     }
 
     @Override
     public void mouseReleased(int button, int x, int y) {
-        if (!this.pause) {
+        if (this.gameIsRunning()) {
             this.spectatorGodController.mouseReleased(button, x, y);
         }
     }
@@ -339,5 +339,9 @@ public class GameController extends WindowController {
         this.playerTypes.add(EGameObject.SLIME);
         this.playerTypes.add(EGameObject.SLIME);
         GameObjectController.get().createPlayers(this.playerTypes);
+    }
+
+    public boolean gameIsRunning() {
+        return !this.pause && this.gameStarted && !this.gameFinish;
     }
 }

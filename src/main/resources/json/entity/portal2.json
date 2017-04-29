@@ -1,0 +1,60 @@
+{
+  "path": "portal2.png",
+  "spriteNumber": 2,
+  "spriteSizeX": 0,
+  "spriteSizeY": 0,
+  "sprites": [
+    {
+      "SpritePosX": 0,
+      "SpritePosY": 0,
+      "SpriteSizeX": 100,
+      "SpriteSizeY": 21,
+      "BodyPosX": 0,
+      "BodyPosY": 0,
+      "BodySizeX": 100,
+      "BodySizeY": 21,
+      "rectangles": [
+        {
+          "type": "blockBody",
+          "posX": 9.790205955505371,
+          "posY": 8.251745223999023,
+          "sizeX": 81.11884,
+          "sizeY": 4.7552423
+        },
+        {
+          "type": "attackBody",
+          "posX": 8.391605377197266,
+          "posY": 5.594403266906738,
+          "sizeX": 83.21675,
+          "sizeY": 9.510486
+        }
+      ]
+    },
+    {
+      "SpritePosX": 100,
+      "SpritePosY": 0,
+      "SpriteSizeX": 100,
+      "SpriteSizeY": 21,
+      "BodyPosX": 0,
+      "BodyPosY": 0,
+      "BodySizeX": 100,
+      "BodySizeY": 21,
+      "rectangles": [
+        {
+          "type": "blockBody",
+          "posX": 9.790206909179688,
+          "posY": 8.251745223999023,
+          "sizeX": 81.11884,
+          "sizeY": 4.7552423
+        },
+        {
+          "type": "attackBody",
+          "posX": 8.3916015625,
+          "posY": 5.594403266906738,
+          "sizeX": 83.21675,
+          "sizeY": 9.510486
+        }
+      ]
+    }
+  ]
+}

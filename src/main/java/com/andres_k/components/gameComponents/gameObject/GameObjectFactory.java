@@ -12,6 +12,7 @@ import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Platf
 import com.andres_k.components.gameComponents.gameObject.objects.players.Slime;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.tools.Console;
 
 /**
  * Created by andres_k on 13/10/2015.
@@ -32,8 +33,8 @@ public class GameObjectFactory {
             object = new Border(animatorController, id, x, y);
         } else if (type == EGameObject.MAP) {
             object = new MapObstacle(animatorController, id, x, y);
-        } else if (type == EGameObject.PORTAL) {
-            object = new Portal(animatorController, id, x, y);
+        } else if (type.isIn(EGameObject.PORTAL)) {
+            object = new Portal(animatorController, type, id, x, y);
         } else if (type == EGameObject.GATE) {
             object = new Gate(animatorController, id, x, y);
         } else if (type.isIn(EGameObject.BONUS)) {

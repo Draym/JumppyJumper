@@ -11,13 +11,8 @@ public enum EInput {
     KEY_RELEASED("KEY" + RELEASED.value), KEY_PRESSED("KEY" + PRESSED.value),
     MOUSE_RELEASED("MOUSE" + RELEASED.value), MOUSE_PRESSED("MOUSE" + PRESSED.value),
 
-
-    // MENU
-    OVERLAY_1("OVERLAY_1"), OVERLAY_2("OVERLAY_2"),
-
     // ACTIONS
-    FAST("FAST"),
-    SLOW("SLOW");
+    PORTAL_CHANGE("PORTAL_CHANGE");
 
 
     private final int index;

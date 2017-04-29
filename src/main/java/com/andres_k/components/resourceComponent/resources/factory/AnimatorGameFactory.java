@@ -69,14 +69,17 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/map/ground.json")));
         } else if (index == ESprites.WALL) {
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/map/wall.json")));
-        } else if (index == ESprites.PORTAL) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/portal.png", 100, 21), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{70, 70}));
+        } else if (index == ESprites.PORTAL_ATTRACT) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/portal.png", 100, 21), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/portal.json")));
+        } else if (index == ESprites.PORTAL_REPULSE) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/portal2.png", 100, 21), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/portal2.json")));
         } else if (index == ESprites.HEART) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/heart.png", 24, 21), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{70, 70}));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/heart.png", 24, 21), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{100, 100}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/heart.json")));
         } else if (index == ESprites.COIN) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/coin.png", 23, 21), EAnimation.IDLE.isLoop(), 0, 4, 0, 1, new int[]{70, 70, 70, 70}));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/coin.png", 23, 21), EAnimation.IDLE.isLoop(), 0, 4, 0, 1, new int[]{100, 100, 100, 100}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/coin.json")));
         } else if (index == ESprites.GATE) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/gate.png", 144, 145), EAnimation.IDLE.isLoop(), 0, 1, 0, 1, new int[]{100}));
