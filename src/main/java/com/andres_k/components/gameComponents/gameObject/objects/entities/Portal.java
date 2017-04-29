@@ -31,7 +31,7 @@ public class Portal extends Obstacle {
             Slime slime = (Slime) enemy;
 
             double maxX = 1;
-            double maxY = 2.5;
+            double maxY = 3;
             double coeff = (Math.tan(Math.toRadians(this.getAnimatorController().getRotateAngle())));
 
             double coeffY = MathTools.abs((float) (-1 / coeff));
@@ -48,16 +48,11 @@ public class Portal extends Obstacle {
 
             Console.write("coeff: " + coeff + " -> [" + coeffX + ", " + coeffY + "]");
             Shape rect = this.getBody().getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY(), this.getAnimatorController().getRotateAngle());
-            Shape enemyS = enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle());
-            Console.write("posP: " + enemyS.getCenterY() + "    rect: " + rect.getCenterY());
-            boolean positionUp;
+            Shape enemyRect = enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle());
+            Console.write("posP: " + enemyRect.getCenterY() + "    rect: " + rect.getCenterY());
 
-            double[] pt1 = {rect.getCenterX() + 100, rect.getCenterY()};
-            AffineTransform.getRotateInstance(Math.toRadians(this.getAnimatorController().getRotateAngle() + 180), rect.getCenterX(), rect.getCenterY()).transform(pt1, 0, pt1, 0, 1);
-            double[] pt2 = {rect.getCenterX() + 100, rect.getCenterY()}; //new double[]{rect.getCenterX(), rect.getCenterY()}
-            AffineTransform.getRotateInstance(Math.toRadians(this.getAnimatorController().getRotateAngle()), rect.getCenterX(), rect.getCenterY()).transform(pt2, 0, pt2, 0, 1);
-            positionUp = MathTools.isUpper(pt1, pt2, new double[]{enemy.getPosX(), enemy.getPosY()});
-            Console.write("posUP: " + positionUp + " (" + pt1[0] + ", " + pt1[1] + ") {" + pt2[0] + ", " + pt2[1] + "} [" + enemy.getPosX() + ", " + enemy.getPosY() + "]");
+            boolean positionUp = MathTools.isUpper(rect, this.animatorController.getRotateAngle(), enemyRect);
+            Console.write("posUP: " + positionUp);
 
             try {
                 slime.getAnimatorController().changeAnimation(EAnimation.JUMP);
@@ -65,10 +60,10 @@ public class Portal extends Obstacle {
 
                 if (this.type == EGameObject.PORTAL_ATTRACT) {
                     if (positionUp) {
-                        enemy.getMovement().setCoeffX((float) coeffX);
+                        enemy.getMovement().setCoeffX((float) coeffX * 1.5f);
                         enemy.getMovement().setCoeffY((float) coeffY);
                     } else {
-                        enemy.getMovement().setCoeffX((float) coeffX);
+                        enemy.getMovement().setCoeffX((float) coeffX * 1.5f);
                         enemy.getMovement().setCoeffY(-(float) coeffY);
                     }
                 } else if (this.type == EGameObject.PORTAL_REPULSE) {
