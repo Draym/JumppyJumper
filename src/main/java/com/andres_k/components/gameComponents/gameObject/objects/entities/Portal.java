@@ -26,10 +26,8 @@ public class Portal extends Obstacle {
     }
 
     @Override
-    public void manageDoHit(GameObject enemy) {
-        if (enemy.getType() == EGameObject.SLIME && enemy.isLastAttacker(this.getId())) {
-            Slime slime = (Slime) enemy;
-
+    public void manageDoHit(GameObject slime) {
+        if (slime.getType() == EGameObject.SLIME && slime.isLastAttacker(this.getId())) {
             double maxX = 1;
             double maxY = 3;
             double coeff = (Math.tan(Math.toRadians(this.getAnimatorController().getRotateAngle())));
@@ -48,7 +46,7 @@ public class Portal extends Obstacle {
 
             Console.write("coeff: " + coeff + " -> [" + coeffX + ", " + coeffY + "]");
             Shape rect = this.getBody().getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY(), this.getAnimatorController().getRotateAngle());
-            Shape enemyRect = enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle());
+            Shape enemyRect = slime.getBody().getFlippedBody(slime.getAnimatorController().getEyesDirection().isHorizontalFlip(), slime.getPosX(), slime.getPosY(), slime.getAnimatorController().getRotateAngle());
             Console.write("posP: " + enemyRect.getCenterY() + "    rect: " + rect.getCenterY());
 
             boolean positionUp = MathTools.isUpper(rect, this.animatorController.getRotateAngle(), enemyRect);
@@ -56,35 +54,35 @@ public class Portal extends Obstacle {
 
             try {
                 slime.getAnimatorController().changeAnimation(EAnimation.JUMP);
+                slime.getAnimatorController().setEyesDirection(EDirection.RIGHT);
                 slime.getMovement().resetGravity();
 
                 if (this.type == EGameObject.PORTAL_ATTRACT) {
                     if (positionUp) {
-                        enemy.getMovement().setCoeffX((float) coeffX * 1.5f);
-                        enemy.getMovement().setCoeffY((float) coeffY);
+                        slime.getMovement().setCoeffX((float) coeffX * 1.5f);
+                        slime.getMovement().setCoeffY((float) coeffY);
                     } else {
-                        enemy.getMovement().setCoeffX((float) coeffX * 1.5f);
-                        enemy.getMovement().setCoeffY(-(float) coeffY);
+                        slime.getMovement().setCoeffX((float) coeffX * 1.5f);
+                        slime.getMovement().setCoeffY(-(float) coeffY);
                     }
                 } else if (this.type == EGameObject.PORTAL_REPULSE) {
                     if (positionUp) {
-                        enemy.getMovement().setCoeffX((float) coeffX);
-                        enemy.getMovement().setCoeffY(-(float) coeffY);
+                        slime.getMovement().setCoeffX((float) coeffX);
+                        slime.getMovement().setCoeffY(-(float) coeffY);
                     } else {
-                        enemy.getMovement().setCoeffX((float) coeffX);
-                        enemy.getMovement().setCoeffY((float) coeffY);
+                        slime.getMovement().setCoeffX((float) coeffX);
+                        slime.getMovement().setCoeffY((float) coeffY);
                     }
                 }
-
                 if (coeff > 0.00f) {
                     if ((this.type == EGameObject.PORTAL_REPULSE && !positionUp) || (this.type == EGameObject.PORTAL_ATTRACT && positionUp)) {
-                        enemy.getMovement().setCoeffX(enemy.getMovement().getCoeffX() * -1);
-                        enemy.getAnimatorController().setEyesDirection(EDirection.LEFT);
+                        slime.getMovement().setCoeffX(slime.getMovement().getCoeffX() * -1);
+                        slime.getAnimatorController().setEyesDirection(EDirection.LEFT);
                     }
                 } else {
                     if ((this.type == EGameObject.PORTAL_REPULSE && positionUp) || (this.type == EGameObject.PORTAL_ATTRACT && !positionUp)) {
-                        enemy.getMovement().setCoeffX(enemy.getMovement().getCoeffX() * -1);
-                        enemy.getAnimatorController().setEyesDirection(EDirection.LEFT);
+                        slime.getMovement().setCoeffX(slime.getMovement().getCoeffX() * -1);
+                        slime.getAnimatorController().setEyesDirection(EDirection.LEFT);
                     }
                 }
             } catch (SlickException e) {
