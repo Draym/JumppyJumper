@@ -50,7 +50,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.andres_k.Main</mainClass>
+                            <mainClass>com.andres_k.custom.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
