@@ -1,6 +1,6 @@
 package com.andres_k.gameToolsLib.components.networkComponents.networkSend.messageServer;
 
-import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Player;
+import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Character;
 import com.andres_k.gameToolsLib.components.networkComponents.networkSend.MessageModel;
 
 /**
@@ -14,10 +14,10 @@ public class MessageStatePlayer extends MessageModel {
     public MessageStatePlayer() {
     }
 
-    public MessageStatePlayer(Player player) {
-        this.life = player.getCurrentLife();
-        this.x = player.getPosX();
-        this.y = player.getPosY();
+    public MessageStatePlayer(Character character) {
+        this.life = character.getCurrentLife();
+        this.x = character.getPosX();
+        this.y = character.getPosY();
     }
 
     public float getX() {

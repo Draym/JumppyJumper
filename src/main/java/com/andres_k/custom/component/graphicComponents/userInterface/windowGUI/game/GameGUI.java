@@ -120,7 +120,7 @@ public class GameGUI extends UserInterface {
         //panelQuitDetails.addItem(ElementFactory.createText("End of the Game !", ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 30, 90, 0));
 
         PaginatedList ctrl = (PaginatedList) this.getElementById(ELocation.GAME_GUI_Controls.getId()).getFromId(ELocation.GUI_ELEMENT_PlayerControls.getId());
-        ctrl.setVisibleList("Player 2", GameConfig.mode == EMode.VERSUS);
+        ctrl.setVisibleList("Character 2", GameConfig.mode == EMode.VERSUS);
     }
 
     @Override

@@ -53,6 +53,7 @@ public abstract class GameObject {
         this.lastAttacker = null;
         this.visibleInScreen = true;
         this.initResetAttackerTimer(false);
+        this.animatorController.setOwnerId(this.id);
     }
 
     public void revive() {

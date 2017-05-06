@@ -8,7 +8,7 @@ import com.andres_k.gameToolsLib.components.eventComponents.input.InputGame;
 import com.andres_k.custom.component.gameComponent.gameObject.EGameObject;
 import com.andres_k.gameToolsLib.components.gameComponent.gameObject.GameObject;
 import com.andres_k.gameToolsLib.components.gameComponent.gameObject.GameObjectController;
-import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Player;
+import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Character;
 import com.andres_k.gameToolsLib.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.gameToolsLib.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.gameToolsLib.components.networkComponents.networkGame.NetworkProfile;
@@ -239,11 +239,11 @@ public abstract class GameController extends WindowController {
             }
         } else if (task instanceof MessageStatePlayer) {
             GameObject object = GameObjectController.get().getObjectById(task.getId());
-            if (object != null && object instanceof Player) {
-                Player player = (Player) object;
+            if (object != null && object instanceof Character) {
+                Character character = (Character) object;
                 MessageStatePlayer state = (MessageStatePlayer) task;
-                player.setCurrentLife(state.getLife());
-                player.getMovement().setPositions(state.getX(), state.getY());
+                character.setCurrentLife(state.getLife());
+                character.getMovement().setPositions(state.getX(), state.getY());
             }
         } else if (task instanceof MessageInputPlayer) {
             GameObject object = GameObjectController.get().getObjectById(task.getId());

@@ -15,7 +15,12 @@ public enum EInput {
     PORTAL_REPULSE("PORTAL_REPULSE"),
     PORTAL_ATTRACT("PORTAL_ATTRACT"),
     PAUSE("PAUSE"),
-    CHECKPOINT("CHECKPOINT");
+    CHECKPOINT("CHECKPOINT"),
+
+
+    // MOVES
+    MOVE_UP("MOVE_UP"), MOVE_DOWN("MOVE_DOWN"),
+    MOVE_LEFT("MOVE_LEFT"), MOVE_RIGHT("MOVE_RIGHT");
 
 
     private final int index;

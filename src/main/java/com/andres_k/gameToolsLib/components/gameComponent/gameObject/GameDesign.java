@@ -1,7 +1,7 @@
 package com.andres_k.gameToolsLib.components.gameComponent.gameObject;
 
 import com.andres_k.gameToolsLib.components.controllers.EMode;
-import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Player;
+import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Character;
 import com.andres_k.gameToolsLib.utils.configs.GameConfig;
 import org.newdawn.slick.SlickException;
 
@@ -31,7 +31,7 @@ public abstract class GameDesign {
 
     public abstract void addWinner(String id);
 
-    public abstract void thisPlayerIsDead(Player player);
+    public abstract void thisPlayerIsDead(Character character);
 
     public boolean isTheEndOfTheGame() {
         return (GameConfig.mode != EMode.SOLO && GameObjectController.get().getNumberPlayers() == 0);

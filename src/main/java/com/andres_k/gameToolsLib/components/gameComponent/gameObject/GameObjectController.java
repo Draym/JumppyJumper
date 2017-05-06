@@ -6,7 +6,7 @@ import com.andres_k.custom.component.gameComponent.gameObject.MyGameDesign;
 import com.andres_k.gameToolsLib.components.camera.CameraController;
 import com.andres_k.custom.component.eventComponents.EInput;
 import com.andres_k.gameToolsLib.components.gameComponent.collisions.CollisionResult;
-import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Player;
+import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Character;
 import com.andres_k.custom.component.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.gameToolsLib.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.gameToolsLib.components.networkComponents.networkGame.NetworkController;
@@ -91,7 +91,7 @@ public final class GameObjectController {
             for (int i = 0; i < this.players.size(); ++i) {
                 this.players.get(i).update();
                 if (this.players.get(i).isNeedDelete() || !this.players.get(i).isVisibleInScreen()) {
-                    this.gameDesign.thisPlayerIsDead((Player) this.players.get(i));
+                    this.gameDesign.thisPlayerIsDead((Character) this.players.get(i));
                     this.players.remove(i);
                     --i;
                 } else {
@@ -203,7 +203,7 @@ public final class GameObjectController {
             player.doTask(new Tuple<>(ETaskType.SETTER, "teamOne", ally));
             checked = true;
         }
-        Console.write("Create Player: " + player);
+        Console.write("Create Character: " + player);
         /*
         if (ally) {
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(players.id, 475, 85, EGuiElement.getEnum(players.getType().getValue(), EGuiElement.ICON.getValue()), false))));
@@ -223,7 +223,7 @@ public final class GameObjectController {
             object.doTask(new Tuple<>(ETaskType.SETTER, "teamOne", false));
         }
         Console.write("Create Entity: " + object);
-        if (object instanceof Player) {
+        if (object instanceof Character) {
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(object.getId(), 475, 85, EGuiElement.getEnum(object.getType().getValue(), EGuiElement.ICON.getValue()), true))));
         }
         this.entities.add(object);
@@ -317,7 +317,7 @@ public final class GameObjectController {
         int nbPlayer = this.players.size();
 
         for (GameObject object : this.entities) {
-            if (object instanceof Player) {
+            if (object instanceof Character) {
                 nbPlayer += 1;
             }
         }

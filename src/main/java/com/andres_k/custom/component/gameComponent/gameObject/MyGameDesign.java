@@ -7,7 +7,7 @@ import com.andres_k.gameToolsLib.components.gameComponent.animations.AnimatorCon
 import com.andres_k.gameToolsLib.components.gameComponent.gameObject.GameDesign;
 import com.andres_k.gameToolsLib.components.gameComponent.gameObject.GameObject;
 import com.andres_k.gameToolsLib.components.gameComponent.gameObject.GameObjectController;
-import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Player;
+import com.andres_k.gameToolsLib.components.gameComponent.gameObject.objects.Character;
 import com.andres_k.gameToolsLib.components.gameComponent.movement.EDirection;
 import com.andres_k.gameToolsLib.utils.configs.GameConfig;
 import com.andres_k.gameToolsLib.utils.tools.Console;
@@ -98,9 +98,9 @@ public final class MyGameDesign extends GameDesign {
     }
 
     @Override
-    public void thisPlayerIsDead(Player player) {
+    public void thisPlayerIsDead(Character character) {
         Console.write("\n A Slime is dead");/*
-        if (player.getId().equals(CameraController.get().getIdOwner())) {
+        if (character.getId().equals(CameraController.get().getIdOwner())) {
         }*/
     }
 

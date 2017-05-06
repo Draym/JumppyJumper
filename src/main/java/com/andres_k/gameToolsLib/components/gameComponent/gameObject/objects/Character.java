@@ -11,9 +11,9 @@ import org.newdawn.slick.SlickException;
 /**
  * Created by kevin on 16/04/2017.
  */
-public class Player extends PhysicalObject {
+public class Character extends PhysicalObject {
 
-    protected Player(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
+    protected Character(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
         super(animatorController, type, id, x, y, life, damage, moveSpeed, gravitySpeed, weight);
     }
 
