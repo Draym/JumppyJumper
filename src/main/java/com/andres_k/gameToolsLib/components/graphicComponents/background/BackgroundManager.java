@@ -33,6 +33,10 @@ public class BackgroundManager {
         this.components.entrySet().forEach(entry -> entry.getValue().run());
     }
 
+    public void stop() {
+        this.components.entrySet().forEach(entry -> entry.getValue().stop());
+    }
+
     public void addComponent(EBackground type, BackgroundComponent component) {
         this.components.put(type, component);
     }
