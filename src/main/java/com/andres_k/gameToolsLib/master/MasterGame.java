@@ -10,11 +10,9 @@ import com.andres_k.gameToolsLib.components.resourceComponents.sounds.MusicContr
 import com.andres_k.gameToolsLib.components.resourceComponents.sounds.SoundController;
 import com.andres_k.gameToolsLib.components.taskComponent.CentralTaskManager;
 import com.andres_k.custom.component.taskComponents.ELocation;
-import com.andres_k.gameToolsLib.utils.configs.ConfigPath;
-import com.andres_k.gameToolsLib.utils.configs.CurrentUser;
-import com.andres_k.gameToolsLib.utils.configs.GlobalVariable;
-import com.andres_k.gameToolsLib.utils.configs.WindowConfig;
+import com.andres_k.gameToolsLib.utils.configs.*;
 import com.andres_k.gameToolsLib.utils.tools.ColorTools;
+import com.andres_k.gameToolsLib.utils.tools.DLLTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -27,16 +25,17 @@ import java.util.UUID;
 public class MasterGame {
     private Windows windows;
 
-    public MasterGame(String gameName, String playerPseudo) throws SlickException, JSONException {
+    public MasterGame() throws SlickException, JSONException {
+        DLLTools.init();
         ColorTools.init();
 
         InputData.init(ConfigPath.config_input);
         ScoreData.init(ConfigPath.config_score);
-        CurrentUser.init(playerPseudo, UUID.randomUUID().toString(), "ally");
+        CurrentUser.init("player 1", UUID.randomUUID().toString(), "ally");
 
         CentralTaskManager.get().register(ELocation.MUSIC_CONTROLLER.getId(), MusicController.get());
         CentralTaskManager.get().register(ELocation.SOUND_CONTROLLER.getId(), SoundController.get());
-        this.windows = new MyWindows(gameName);
+        this.windows = new MyWindows(GameInfo.get().getName());
     }
 
     public void start() {

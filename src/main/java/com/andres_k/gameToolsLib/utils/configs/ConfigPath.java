@@ -6,6 +6,7 @@ package com.andres_k.gameToolsLib.utils.configs;
 public class ConfigPath {
     public static final String config_input = "config/configInput.json";
     public static final String config_score = "config/gameScore.json";
+    public static final String game_info = "config/gameInfo.json";
     public static final String comboAvailableList = "config/comboAvailableList.json";
     public static final String jsonCollision = "json";
     public static final String image_game = "images/game";
