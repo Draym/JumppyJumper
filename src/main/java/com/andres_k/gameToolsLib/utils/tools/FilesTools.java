@@ -1,5 +1,7 @@
 package com.andres_k.gameToolsLib.utils.tools;
 
+import com.andres_k.gameToolsLib.utils.configs.GameInfo;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -52,6 +54,7 @@ public class FilesTools {
     }
 
     public static void writeInFile(String fileName, String value) {
+        fileName = GameInfo.get().getGamePathTMP() + "/" + fileName;
         File file = new File(fileName);
         if (!file.exists())
             createParents(fileName);

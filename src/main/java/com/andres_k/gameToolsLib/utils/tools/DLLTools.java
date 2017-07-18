@@ -49,7 +49,7 @@ public class DLLTools {
      * When packaged into JAR extracts DLLs, places these into
      */
     private static void loadFromJar(String[] dlls) {
-        String path = System.getProperty("java.io.tmpdir") + "/TMP_DLL_" + GameInfo.get().getName() + LIB_BIN;
+        String path = GameInfo.get().getGamePathTMP() + LIB_BIN;
         try {
             for (String dll : dlls) {
                 File f = new File(path + dll + ".dll");

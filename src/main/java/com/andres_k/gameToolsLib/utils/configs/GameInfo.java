@@ -10,12 +10,14 @@ import org.codehaus.jettison.json.JSONObject;
 public class GameInfo {
     private String name = "";
     private String version = "";
+    private String gamePathTMP = "";
 
     private GameInfo() {
         try {
             JSONObject gameInfo = new JSONObject(FilesTools.readFile(ConfigPath.game_info));
             this.name = gameInfo.getString("name");
             this.version = gameInfo.getString("version");
+            this.gamePathTMP = System.getProperty("java.io.tmpdir") + "/TMP_DLL_" + this.name;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -35,5 +37,9 @@ public class GameInfo {
 
     public String getVersion() {
         return this.version;
+    }
+
+    public String getGamePathTMP() {
+        return this.gamePathTMP;
     }
 }
