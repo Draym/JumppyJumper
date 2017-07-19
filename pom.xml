@@ -55,7 +55,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.andres_k.custom.Main</mainClass>
+                            <mainClass>com.andres_k.gameToolsLib.master.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

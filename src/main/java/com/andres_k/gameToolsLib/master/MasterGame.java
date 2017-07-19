@@ -17,6 +17,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
+import java.applet.Applet;
 import java.util.UUID;
 
 /**
@@ -24,18 +25,10 @@ import java.util.UUID;
  */
 public class MasterGame {
     private Windows windows;
+    private boolean isInit = false;
 
-    public MasterGame() throws SlickException, JSONException {
-        DLLTools.init();
-        ColorTools.init();
-
-        InputData.init(ConfigPath.config_input);
-        ScoreData.init(ConfigPath.config_score);
-        CurrentUser.init("player 1", UUID.randomUUID().toString(), "ally");
-
-        CentralTaskManager.get().register(ELocation.MUSIC_CONTROLLER.getId(), MusicController.get());
-        CentralTaskManager.get().register(ELocation.SOUND_CONTROLLER.getId(), SoundController.get());
-        this.windows = new MyWindows(GameInfo.get().getName());
+    public MasterGame() {
+        this.init();
     }
 
     public void start() {
@@ -43,6 +36,30 @@ public class MasterGame {
             this.startGame();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void init() {
+        if (!this.isInit) {
+            DLLTools.init();
+            ColorTools.init();
+            CurrentUser.init("player 1", UUID.randomUUID().toString(), "ally");
+            CentralTaskManager.get().register(ELocation.MUSIC_CONTROLLER.getId(), MusicController.get());
+            CentralTaskManager.get().register(ELocation.SOUND_CONTROLLER.getId(), SoundController.get());
+
+            try {
+                InputData.init(ConfigPath.config_input);
+                ScoreData.init(ConfigPath.config_score);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                this.windows = new MyWindows(GameInfo.get().getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.isInit = true;
         }
     }
 
