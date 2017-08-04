@@ -14,11 +14,11 @@ import java.lang.reflect.Field;
  */
 public class DLLTools {
     private final static String LIB_BIN = "/native/windows/";
-    private final static String[] WIN_DLL32 = new String[]{"jinput-dx8", "jinput-raw", "lwjgl", "OpenAL32"};
-    private final static String[] WIN_DLL64 = new String[]{"jinput-dx8_64", "jinput-raw_64", "lwjgl64","OpenAL64"};
-    private final static String[] LIN_DLL32 = new String[]{};
-    private final static String[] LIN_DLL64 = new String[]{};
-    private final static String[] MAC_DLL = new String[]{};
+    private final static String[] WIN_DLL32 = new String[]{"jinput-dx8.dll", "jinput-raw.dll", "lwjgl.dll", "OpenAL32.dll"};
+    private final static String[] WIN_DLL64 = new String[]{"jinput-dx8_64.dll", "jinput-raw_64.dll", "lwjgl64.dll","OpenAL64.dll"};
+    private final static String[] LIN_DLL32 = new String[]{"libjinput-linux.so", "liblwjgl.so", "libopenal.so"};
+    private final static String[] LIN_DLL64 = new String[]{"libjinput-linux64.so", "liblwjgl64.so", "libopenal64.so"};
+    private final static String[] MAC_DLL = new String[]{"libjinput-osx.jnilib", "liblwjgl.jnilib", "openal.dylib"};
 
     public static void init() {
         Console.write("DLL: Loading");
@@ -52,7 +52,7 @@ public class DLLTools {
         String path = GameInfo.get().getGamePathTMP() + LIB_BIN;
         try {
             for (String dll : dlls) {
-                File f = new File(path + dll + ".dll");
+                File f = new File(path + dll);
                 if (!f.exists()) {
                     loadLib(LIB_BIN, path, dll);
                 }
@@ -71,7 +71,6 @@ public class DLLTools {
      * Puts library to temp dir and loads to memory
      */
     private static void loadLib(String srcPath, String finalPath, String name) throws Exception {
-        name = name + ".dll";
         try {
             InputStream in = DLLTools.class.getResourceAsStream(srcPath + name);
             File fileOut = new File(finalPath + name);
