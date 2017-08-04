@@ -40,7 +40,7 @@ public abstract class FlashIt extends Effect {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, float scale) {
         this.flash.draw(g);
     }
 

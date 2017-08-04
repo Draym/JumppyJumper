@@ -176,17 +176,21 @@ public class AnimatorController implements Observer {
     }
 
     public void addAnimation(EAnimation type, int index, Animation animation) {
+        this.addAnimation(type, index, 1.0f, animation);
+    }
+
+    public void addAnimation(EAnimation type, int index, float scale, Animation animation) {
         if (!this.animators.containsKey(type)) {
             this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addAnimation(animation, index);
+        this.animators.get(type).addAnimation(animation, index, scale);
     }
 
     public void addCollision(EAnimation type, int index, String jsonValue) throws JSONException {
         if (!this.animators.containsKey(type)) {
             this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addCollision(new BodyAnimation(jsonValue), index);
+        this.animators.get(type).addCollision(jsonValue, index);
     }
 
     public void addConfig(EAnimation type, int index, AnimationConfigItem config) {
@@ -346,20 +350,18 @@ public class AnimatorController implements Observer {
     }
 
     public boolean isDeleted() {
-        if (!this.deleted) {
-            try {
-                if (this.current == EAnimation.EXPLODE && this.currentAnimation().isStopped()) {
-                    if (this.getCurrentContainer().getConfig() != null) {
-                        if (this.getCurrentContainer().getConfig().getNext().getV1() == EAnimation.NULL) {
-                            this.deleted = true;
-                        }
-                    } else {
+        try {
+            if (this.current == EAnimation.EXPLODE && this.currentAnimation().isStopped()) {
+                if (this.getCurrentContainer().getConfig() != null) {
+                    if (this.getCurrentContainer().getConfig().getNext().getV1() == EAnimation.NULL) {
                         this.deleted = true;
                     }
+                } else {
+                    this.deleted = true;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return this.deleted;
     }

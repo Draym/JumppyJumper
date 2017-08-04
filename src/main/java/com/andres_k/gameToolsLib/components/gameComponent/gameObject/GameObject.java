@@ -211,10 +211,7 @@ public abstract class GameObject {
         return this.animatorController.currentBodySprite();
     }
 
-    public float
-
-
-    graphicalX() {
+    public float graphicalX() {
         if (this.getBody() == null) {
             return this.getPosX();
         }
@@ -226,6 +223,10 @@ public abstract class GameObject {
             return this.getPosY();
         }
         return this.getBody().getFlippedSprite(this.animatorController.getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY()).getMinY();
+    }
+
+    public float getScaledValue(float value) {
+        return value * GameConfig.scaleGameSprite;
     }
 
     public float getPosX() {

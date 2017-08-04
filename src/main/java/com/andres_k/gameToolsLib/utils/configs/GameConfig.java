@@ -19,6 +19,7 @@ public class GameConfig {
 
     public static final boolean animatedHome = true;
     public static final boolean characterLogoOff = true;
+    public static final float scaleGameSprite = 1.0f;
 
     public static ArrayList<EGameObject> typePlayer = new ArrayList<>();
 
