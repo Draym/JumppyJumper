@@ -177,7 +177,7 @@ public final class GameObjectController {
             count = 1;
             startX = 150;
             for (EGameObject type : playerNames) {
-                this.createPlayer(type, "player_slime:" + count, startX, 200, 600, 200, true);
+                this.createPlayer(type, "player_slime:" + count, startX, 200, 632, 0, true);
                 startX += slimeWidth - 10;
                 ++count;
             }
@@ -196,7 +196,7 @@ public final class GameObjectController {
         while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
             if (checked) {
                 randomX = (float) RandomTools.getInt(boundX) + startX;
-                randomY = (float) RandomTools.getInt(boundY) + startY;
+                randomY = (float) RandomTools.getInt(boundY) - startY;
             }
             player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
             Console.write("p: " + player);
