@@ -26,6 +26,8 @@ As the god of the slimes world, you need to use your power to open a way through
 ###### Actions
 - The slimes will move straight without ever stop
 - The player has to place portails to help the slimes for dodging the traps
+- The player can use a 'pause' functionnality, to prepare in advance his portals
+- Some 'SpawnPoint' will be added
 - The camera will always follow the first slime, take care to don't loose the one who get stuck
 
 ###### Portals
