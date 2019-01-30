@@ -14,7 +14,7 @@ It is actually in alpha. It still got some bug, and only 1 level is available.
 -------------------------------------------------------------------------------------------  
 ## Story :  
 
-<img src="ReadMe-images/jj-loading.PNG" height="400">
+<img src="README-images/jj-loading.PNG" height="400">
 
 A factory has captured whild happy slimes in order to do chemistry test on them.
 
@@ -38,9 +38,9 @@ As the god of the slimes world, you need to use your power to open a way through
 <br/>
 
 - Samples
-<img src="ReadMe-images/jj-move1.gif" height="400">
-<img src="ReadMe-images/jj-move2.gif" height="400">
+<img src="README-images/jj-move1.gif" height="400">
+<img src="README-images/jj-move2.gif" height="400">
 
 
 - The goald is to reach a gate at the end of the level and to free the slimes
-<img src="ReadMe-images/jj-end.gif" height="400">
+<img src="README-images/jj-end.gif" height="400">
