@@ -21,7 +21,7 @@ public class ScoreData {
 
     public static void init(String file) throws JSONException {
         dataScore = new ArrayList<>();
-        configs = new JSONObject(FilesTools.readFile(file));
+        configs = new JSONObject(FilesTools.readTempFile(file));
         ScoreData.file = file;
 
         JSONArray array = configs.getJSONArray("scores");
@@ -84,7 +84,7 @@ public class ScoreData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        FilesTools.writeInFile(file, configs.toString());
+        FilesTools.writeInTempFile(file, configs.toString());
         return true;
     }
 }
